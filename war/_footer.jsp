@@ -1,4 +1,3 @@
-
 </div>
 
 <script type="text/javascript">
@@ -21,17 +20,18 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
+<div class="social">
+	<span>
+		<g:plusone size="medium" href="https://www.google.com/"></g:plusone>
+	</span>
+	<span>
+		<iframe src="https://www.facebook.com/plugins/like.php?href=[localhost:8888]&amp;show_faces=false&amp;layout=button_count" scrolling="no" frameborder="0" style="height: 21px; width: 100px" allowTransparency="true"></iframe>
+	</span>
+</div>
+
 <div id="footer">
 	<div class="container">
 		<span>Copyright &copy; Franz Sarmiento &amp; Katrina Tan Kit. All rights reserved.</span>
-		<div class="social">
-			<span>
-				<g:plusone size="medium" href="https://www.google.com/"></g:plusone>
-			</span>
-			<span>
-				<iframe src="https://www.facebook.com/plugins/like.php?href=[https://www.google.com/]&amp;show_faces=false&amp;layout=button_count" scrolling="no" frameborder="0" style="height: 21px; width: 100px" allowTransparency="true"></iframe>
-			</span>
-		</div>
 	</div>
 </div>
 </body>

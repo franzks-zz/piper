@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Piper</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="css/bootstrap-theme.min.css" rel="stylesheet" media="screen">

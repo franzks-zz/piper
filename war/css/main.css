@@ -23,22 +23,24 @@ html,body {
 }
 
 .social {
-	display: inline;
-	font-size: 1px;
+	position: absolute;
+	top: 30px;
+	left: 20px;
 }
 
-.social iframe {
-	vertical-align: middle;
+.social span {
+	display: block;
 }
 
-.container {
-	width: 970px !important;
+.hidden {
+	display: none;
 }
 
 /* INDEX.JSP */
 
-.main-index #mascot-container {
-	margin-top: 100px;
+.main-index #mascot-img,
+.main-index #mascot-bubble {
+	margin-top: 50px;
 }
 
 .main-index .mascot-img-container {
@@ -47,7 +49,6 @@ html,body {
 
 .main-index #mascot-bubble {
 	border: 5px solid #555;
-	height: 300px;
 	padding: 20px;
 	-webkit-border-radius: 30px;
 	-moz-border-radius: 30px;
@@ -61,7 +62,7 @@ html,body {
 	width: 0;
 	height: 0;
 	left: -30px;
-	top: 50px;
+	top: 75px;
 	border: 25px solid;
 	border-color: transparent #555 transparent transparent;
 }
@@ -72,7 +73,7 @@ html,body {
 	width: 0;
 	height: 0;
 	left: -24px;
-	top: 50px;
+	top: 75px;
 	border: 25px solid;
 	border-color: transparent #fff transparent transparent;
 }
@@ -84,14 +85,6 @@ html,body {
 	text-align: center;
 }
 
-.main-index #social-activity {
-	min-height: 70px;
-	display: table;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.main-index .g-plusone,
-.main-index .fb-like {
-	vertical-align: middle;
+.main-index #game-chooser {
+	text-align: center;
 }
