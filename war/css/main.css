@@ -36,18 +36,17 @@ html,body {
 	display: none;
 }
 
-/* INDEX.JSP */
-
-.main-index #mascot-img,
-.main-index #mascot-bubble {
+/* MASCOT */
+#mascot-img,
+#mascot-bubble {
 	margin-top: 50px;
 }
 
-.main-index .mascot-img-container {
+.mascot-img-container {
 	text-align: right;
 }
 
-.main-index #mascot-bubble {
+#mascot-bubble {
 	border: 5px solid #555;
 	padding: 20px;
 	-webkit-border-radius: 30px;
@@ -56,7 +55,7 @@ html,body {
 	text-align: justify;
 }
 
-.main-index #mascot-bubble:before {
+#mascot-bubble:before {
 	content: ' ';
 	position: absolute;
 	width: 0;
@@ -67,7 +66,7 @@ html,body {
 	border-color: transparent #555 transparent transparent;
 }
 
-.main-index #mascot-bubble:after {
+#mascot-bubble:after {
 	content: ' ';
 	position: absolute;
 	width: 0;
@@ -77,6 +76,8 @@ html,body {
 	border: 25px solid;
 	border-color: transparent #fff transparent transparent;
 }
+
+/* INDEX.JSP */
 
 .main-index #signinButton {
 	display: block;
@@ -101,13 +102,12 @@ html,body {
 }
 
 .main-picture .picture-wrapper {
-	background: url('../img/picture.png');
 	background-size: 150px;
 
 	width: 150px;
 	height: 150px;
 
-	border: 3px solid red;
+	border: 5px solid;
 
 	-webkit-border-radius: 75px;
 	-moz-border-radius: 75px;
@@ -133,11 +133,27 @@ html,body {
 }
 
 .main-picture .picture-wrapper.over {
-	/*width: 130px;
-	height: 130px;
-	background-size: 130px;*/
-	
-	border: 3px dashed red;
+	border: 5px dashed;
+}
+
+.main-picture #picture-1 {
+	border-color: #4285F4;
+}
+
+.main-picture #picture-2 {
+	border-color: #DB4437;
+}
+
+.main-picture #picture-3 {
+	border-color: #656565;
+}
+
+.main-picture #picture-4 {
+	border-color: #F4B400;
+}
+
+.main-picture #picture-5 {
+	border-color: #0F9D58;
 }
 
 .main-picture .picture p {

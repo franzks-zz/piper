@@ -1,7 +1,16 @@
 var arrPictureWrappers;
 var dragSrcEl = null;
 
+var arrPeople = [];
+var arrPeoplePics = [];
+var arrPeoplePicsRandomized = [];
+var arrPeopleNames = [];
+
+var numOfMistakes = 0;
+
 $(function() {
+	
+	$("#mascot-img").click(mascotClick);
 	
 	arrPictureWrappers = document.querySelectorAll('.picture-wrapper');
 	[].forEach.call(arrPictureWrappers, function(pic) {
@@ -12,7 +21,15 @@ $(function() {
 		pic.addEventListener('drop', handleDrop, false);
 		pic.addEventListener('dragend', handleDragEnd, false);
 	})
+	
+	retrievePeople();
 });
+
+function mascotClick(e) {
+	checkAnswer();
+	
+	$("#mascot-bubble").text("Oooooops! There are still " + numOfMistakes + " profile picture(s) in the incorrect position.");
+}
 
 function handleDragStart(e) {
 	this.style.opacity = '0.4';
@@ -47,11 +64,17 @@ function handleDrop(e) {
 		e.stopPropagation();
 	}
 
-	if(dragSrcEl != this) {
-		dragSrcEl.innerHTML = this.innerHTML;
-		this.innerHTML = e.dataTransfer.getData('text/html');
+	if(dragSrcEl != this) {		
+//		dragSrcEl.innerHTML = this.innerHTML;
+//		this.innerHTML = e.dataTransfer.getData('text/html');
+		
+		var parent = $(this).parent();
+		
+		var temp = $(dragSrcEl).replaceWith(this);
+		
+		$(parent).prepend(temp);
 	}
-
+	
 	return false;
 }
 
@@ -63,20 +86,77 @@ function handleDragEnd(e) {
 	})
 }
 
-function gapiOnLoadCallback() {
-//	gapi.auth.authorize({
-//		client_id: "854462595148.apps.googleusercontent.com",
-//		immediate: true,
-//		response_type: "token",
-//		scope: ["https://www.googleapis.com/auth/plus.login"]
-//	}, authorizeCallback);
-	
-	gapi.auth.setToken("token",localStorage.getItem("access_token"));
-	
-	console.log(localStorage.getItem("access_token"));
-	console.log(gapi.auth.getToken("token",true));
+function retrievePeople() {
+	gapi.client.load('plus', 'v1', function() {
+		var request = gapi.client.plus.people.list({
+			'userId' : 'me',
+			'collection' : 'visible',
+			'orderBy' : 'best'
+		});
+		request.execute(function(resp) {
+			chooseRandomPeople(resp);
+			displayPeople();
+		});
+	});
 }
 
-//function authorizeCallback(authResult) {
-//	console.log(authResult)
-//}
+function chooseRandomPeople(resp) {	
+	for(var i=0; i<5; i++) {
+		var rand = Math.floor(Math.random()*100);
+		
+		arrPeople.push(resp.items[rand]);
+		
+		var url = arrPeople[i].image.url;
+		url = url.substring(0,url.length-2);
+		url += "150";
+		
+		arrPeoplePics.push(url);
+		arrPeopleNames.push(arrPeople[i].displayName);
+	}
+	
+	var arrRandomized = shuffle([0,1,2,3,4]);
+	
+	for(var i=0; i<5; i++) {
+		arrPeoplePicsRandomized[i] = arrPeoplePics[arrRandomized.pop()];
+	}
+}
+
+function displayPeople() {	
+	for(var i=1; i<=5; i++) {
+		$("#name-" + i).text(arrPeopleNames[i-1]);
+		$("#picture-" + i).css("background-image","url('"+arrPeoplePicsRandomized[i-1]+"')");
+	}
+}
+
+function checkAnswer() {
+	numOfMistakes = 0;
+	
+	for(var i=0; i<5; i++) {
+		
+		var pictureWrapper = $(".picture-wrapper")[i];
+		var url = $(pictureWrapper).css("background-image");
+		url = url.substring(4,url.length-1);
+		
+		if(arrPeoplePics[i] != url) {
+			numOfMistakes++;
+		}
+	}
+}
+
+function shuffle(array) {
+    var counter = array.length, temp, index;
+
+    // While there are elements in the array
+    while (counter--) {
+        // Pick a random index
+        index = (Math.random() * counter) | 0;
+
+        // And swap the last element with it
+        temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+    }
+
+    return array;
+}
+
