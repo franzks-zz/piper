@@ -23,13 +23,13 @@
 	
 	<div id="game-chooser" class="row">
 		<div class="col-md-4">
-			<img id="game-icon-picture" src="img/game.png">
+			<a href="picture_game.jsp"><img id="game-icon-picture" class="game-icon" src="img/game.png"></a>
 		</div>
 		<div class="col-md-4">
-			<img id="game-icon-age" src="img/game.png">
+			<img id="game-icon-age" class="game-icon" src="img/game.png">
 		</div>
 		<div class="col-md-4">
-			<img id="game-icon-trivia" src="img/game.png">
+			<img id="game-icon-trivia" class="game-icon" src="img/game.png">
 		</div>
 	</div>
 
@@ -51,6 +51,15 @@
 	The Trivia Game is bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
 </span>
 
-<script src="js/index.js"></script>
+<script type="text/javascript">
+	(function() {
+		var po = document.createElement('script');
+		po.type = 'text/javascript';
+		po.async = true;
+		po.src = 'js/index.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(po, s);
+	})();
+</script>
 
 <jsp:include page="_footer.jsp" />
