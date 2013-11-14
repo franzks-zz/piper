@@ -87,7 +87,7 @@ html,body {
 	border-color: transparent #fff transparent transparent;
 }
 
-/* INDEX.JSP */
+/* INDEX.HTML */
 
 
 
@@ -100,7 +100,7 @@ html,body {
 	margin-top: 75px;
 }
 
-/* PICTURE_GAME.JSP */
+/* PICTURE_GAME.HTML */
 
 .main-picture .picture {
 	margin-top: 50px;
@@ -165,3 +165,21 @@ html,body {
 	text-align: center;
 	margin-top: 20px;
 }
+
+/* SEARCH_GAME.HTML */
+
+.main-search table {
+	margin-top: 30px;
+}
+
+.main-search td {
+	padding-left: 0px;
+	text-align: center;
+}
+
+.main-search #mascot-img,
+.main-search #mascot-bubble {
+	margin-bottom: 30px;
+}
+
+
