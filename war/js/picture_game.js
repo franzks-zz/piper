@@ -1,3 +1,8 @@
+var GAME_STATE_ONGOING = 1;
+var GAME_STATE_ENDED = 2;
+
+var gameState = GAME_STATE_ONGOING;
+
 var arrPictureWrappers;
 var dragSrcEl = null;
 
@@ -11,6 +16,7 @@ var numOfMistakes = 0;
 $(function() {
 	
 	$("#mascot-img").click(mascotClick);
+	$("#btn-main-menu").click(btnMainMenuClick);
 	
 	arrPictureWrappers = document.querySelectorAll('.picture-wrapper');
 	[].forEach.call(arrPictureWrappers, function(pic) {
@@ -26,9 +32,29 @@ $(function() {
 });
 
 function mascotClick(e) {
-	checkAnswer();
 	
-	$("#mascot-bubble").text("Oooooops! There are still " + numOfMistakes + " profile picture(s) in the incorrect position.");
+	if(gameState == GAME_STATE_ONGOING) {
+		checkAnswer();
+		
+		if(numOfMistakes > 0) {
+			$("#mascot-bubble").text("Oooooops! There are still " + numOfMistakes + " profile picture(s) in the incorrect position.");
+		} else {
+			$("#mascot-bubble").text("Congratulations! You have correctly arranged all profile pictures in the correct order. Press me to play again.");
+			gameState = GAME_STATE_ENDED;
+		}
+	} else if(gameState == GAME_STATE_ENDED) {
+		arrPeople = [];
+		arrPeoplePics = [];
+		arrPeoplePicsRandomized = [];
+		arrPeopleNames = [];
+		
+		retrievePeople();
+		gameState = GAME_STATE_ONGOING;
+	}	
+}
+
+function btnMainMenuClick(e) {
+	$("#wrap-inner").load("homepage.html");
 }
 
 function handleDragStart(e) {
@@ -64,12 +90,8 @@ function handleDrop(e) {
 		e.stopPropagation();
 	}
 
-	if(dragSrcEl != this) {		
-//		dragSrcEl.innerHTML = this.innerHTML;
-//		this.innerHTML = e.dataTransfer.getData('text/html');
-		
+	if(dragSrcEl != this) {
 		var parent = $(this).parent();
-		
 		var temp = $(dragSrcEl).replaceWith(this);
 		
 		$(parent).prepend(temp);

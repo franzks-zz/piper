@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
 <link href="css/main.css" rel="stylesheet" media="screen">
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -19,9 +18,17 @@
 </head>
 <body>
 <div id="wrap">
-		<!-- START OF MAIN PAGE CONTENT -->
-		
-		<!-- END OF MAIN PAGE CONTENT -->
+	<div id="wrap-inner">
+	
+	</div>
+	
+	<span id="signinButton">
+		<span class="g-signin" data-callback="signinCallback"
+			data-clientid="854462595148.apps.googleusercontent.com"
+			data-cookiepolicy="single_host_origin"
+			data-requestvisibleactions="http://schemas.google.com/AddActivity"
+			data-scope="https://www.googleapis.com/auth/plus.login"></span>
+	</span>
 </div>
 
 <script src="js/index.js"></script>
@@ -31,7 +38,7 @@
 		var po = document.createElement('script');
 		po.type = 'text/javascript';
 		po.async = true;
-		po.src = 'https://apis.google.com/js/client:plusone.js';
+		po.src = 'https://apis.google.com/js/client:plusone.js?onload=gapiLoadCallback';
 		var s = document.getElementsByTagName('script')[0];
 		s.parentNode.insertBefore(po, s);
 	})();
