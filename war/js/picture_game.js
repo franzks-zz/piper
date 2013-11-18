@@ -14,6 +14,7 @@ var arrPeopleNames = [];
 var numOfMistakes = 0;
 
 $(function() {
+	$("#mascot-img").attr("src","img/mascot_girl.png");
 	$("#mascot-bubble").text($("#msg-default").text());
 	$("#mascot-img").click(mascotClick);
 	$("#btn-main-menu").click(btnMainMenuClick);
@@ -38,8 +39,10 @@ function mascotClick(e) {
 		
 		if(numOfMistakes > 0) {
 			$("#mascot-bubble").text("Oooooops! There are still " + numOfMistakes + " profile picture(s) in the incorrect position.");
+			$("#mascot-img").attr("src","img/mascot_girl_sad.png");
 		} else {
 			$("#mascot-bubble").text($("#msg-correct").text());
+			$("#mascot-img").attr("src","img/mascot_girl_win.png");
 			gameState = GAME_STATE_ENDED;
 		}
 	} else if(gameState == GAME_STATE_ENDED) {
@@ -52,6 +55,7 @@ function mascotClick(e) {
 		gameState = GAME_STATE_ONGOING;
 		
 		$("#mascot-bubble").text($("#msg-default").text());
+		$("#mascot-img").attr("src","img/mascot_girl.png");
 	}	
 }
 
