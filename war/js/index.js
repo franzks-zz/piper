@@ -65,8 +65,6 @@ function swapMascot(gender, mascotPose) {
 	}
 }
 
-$.ajaxSetup({ cache: false });
-
 // util functions
 function shuffle(array) {
     var counter = array.length, temp, index;
@@ -83,4 +81,10 @@ function shuffle(array) {
     }
 
     return array;
+}
+
+function preloadImages(arrayOfImages) {
+    $(arrayOfImages).each(function(){
+        $('<img/>')[0].src = this;
+    });
 }
