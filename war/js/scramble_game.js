@@ -52,8 +52,6 @@ function retrievePerson() {
 		});
 		request.execute(function(resp) {
 			chooseRandomPerson(resp);
-			console.log(name);
-			console.log(nameScrambled);
 			$("#scramble-name").text(nameScrambled);
 		});
 	});

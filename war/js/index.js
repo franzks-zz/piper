@@ -5,7 +5,21 @@ $(function() {
 function signinCallback(authResult) {
 	if (authResult['access_token']) {		
 		$("#signinButton").css("display", "none");
-		$("#btn-play-now").css("display", "block");
+		
+		gapi.client.load('plus', 'v1', function() {
+			var request = gapi.client.plus.people.list({
+				'userId' : 'me',
+				'collection' : 'visible',
+				'orderBy' : 'best'
+			});
+			request.execute(function(resp) {
+				if(resp.totalItems >= 10) {
+					$("#btn-play-now").css("display", "block");
+				} else {
+					$("#msg-error").css("display", "block");
+				}
+			});
+		});
 		
 		randomizeGender();
 	} else if (authResult['error']) {

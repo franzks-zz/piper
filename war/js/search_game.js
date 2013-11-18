@@ -93,7 +93,6 @@ function retrievePeople() {
 			
 			temporarilyFillPuzzle();
 			generatePuzzle();
-			printPuzzle();
 			fillPuzzle();
 			displayPuzzle();
 		});
@@ -115,7 +114,7 @@ function chooseRandomPeople(resp) {
 			arrNames.push(name);
 		} else {
 			i--;
-		}		
+		}
 	}
 	
 	arrNames.sort(function(a, b) {

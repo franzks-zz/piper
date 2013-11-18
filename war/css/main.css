@@ -3,6 +3,7 @@ html,body {
 	/* The html and body elements cannot have any padding or margin. */
 
 	font-family: 'Open Sans', sans-serif;
+	background-color: #EEEEEE;
 }
 
 /* Wrapper for page content to push down footer */
@@ -87,7 +88,7 @@ html,body {
 	left: -24px;
 	top: 75px;
 	border: 25px solid;
-	border-color: transparent #fff transparent transparent;
+	border-color: transparent #EEEEEE transparent transparent;
 }
 
 /* INDEX.HTML */
@@ -115,6 +116,11 @@ html,body {
 #btn-play-now:hover {
 	background-color: #e4747c;
 	text-decoration: none;
+}
+
+#msg-error {
+	display: none;
+	margin-top: 30px;
 }
 
 
