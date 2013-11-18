@@ -1,10 +1,11 @@
 $(function() {
-	$("#wrap-inner").load("homepage.html");
+	$("#wrap-inner").load("landing.html");
 });
 
 function signinCallback(authResult) {
 	if (authResult['access_token']) {		
 		$("#signinButton").css("display", "none");
+		$("#btn-play-now").css("display", "block");
 	} else if (authResult['error']) {
 		$("#signinButton").css("display", "block");
 	}

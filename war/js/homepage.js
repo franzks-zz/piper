@@ -3,8 +3,6 @@ $(function() {
 	$(".game-icon").hover(gameIconHoverIn, gameIconHoverOut);
 	
 	$(".game-icon").click(gameIconClick);
-//	$("#game-icon-search").click(gameIconSearchClick);
-//	$("#game-icon-search").click(gameIconSearchClick);
 });
 
 function gameIconClick(e) {
@@ -21,22 +19,6 @@ function gameIconClick(e) {
 	} catch(err) {}
 	
 }
-
-//function gameIconPictureClick(e) {
-//	try {
-//		if(gapi.auth.getToken().access_token) {
-//			$("#wrap-inner").load("picture_game.html");
-//		}
-//	} catch(err) {}
-//}
-//
-//function gameIconSearchClick(e) {
-//	try {
-//		if(gapi.auth.getToken().access_token) {
-//			$("#wrap-inner").load("search_game.html");
-//		}
-//	} catch(err) {}
-//}
 
 function gameIconHoverIn(e) {
 	if (e.target.id == "game-icon-picture") {
