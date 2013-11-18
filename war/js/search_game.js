@@ -1,9 +1,16 @@
+var GAME_STATE_ONGOING = 1;
+var GAME_STATE_ENDED = 2;
+
+var gameState = GAME_STATE_ONGOING;
+
 var arrNames = [];
+var arrAnswerLocations = [];
 var arrAnswers = [];
 
 var arrPuzzle = [];
 
 $(function() {
+	$("#mascot-bubble").text($("#msg-default").text());
 	$("#btn-main-menu").click(btnMainMenuClick);
 	$("#mascot-img").click(mascotClick);
 	
@@ -15,11 +22,47 @@ function btnMainMenuClick(e) {
 }
 
 function mascotClick(e) {
-	var index = $.inArray($("#txt-answer").val().toUpperCase(),arrNames);
 	
-	if(index != -1) {
-		colorAnsweredCells(arrAnswers[index]);
+	if(gameState == GAME_STATE_ONGOING) {
+		var answer = $("#txt-answer").val().toUpperCase();
+		
+		var indexNames = $.inArray(answer,arrNames);
+		var indexAnswers = $.inArray(answer,arrAnswers);
+		
+		if(indexNames != -1) {
+			if(indexAnswers == -1) {
+				colorAnsweredCells(arrAnswerLocations[indexNames]);
+				arrAnswers.push(answer);
+				
+				$("#mascot-bubble").text("You have found a hidden name! " + (10-arrAnswers.length) + " to go!");
+				
+				if(arrAnswers.length == 10) {
+					$("#mascot-bubble").text($("#msg-finished").text());
+					gameState = GAME_STATE_ENDED;
+				}
+				
+			} else {
+				$("#mascot-bubble").text($("#msg-duplicate").text());
+			}
+			
+		} else {
+			$("#mascot-bubble").text($("#msg-wrong").text());
+		}
+	} else if(gameState == GAME_STATE_ENDED) {
+		arrNames = [];
+		arrAnswerLocations = [];
+		arrAnswers = [];
+		arrPuzzle = [];
+		
+		$("table").empty();
+		$("#txt-answer").val("");
+		
+		retrievePeople();
+		
+		$("#mascot-bubble").text($("#msg-default").text());
 	}
+	
+	
 }
 
 function colorAnsweredCells(answer) {
@@ -92,7 +135,8 @@ function generatePuzzle() {
 			if(checkIfEmptyHorizontal(arrNames[i].length, randSubtracted, randFull)) {
 				insertHorizontal(arrNames[i],randSubtracted,randFull);
 				
-				arrAnswers.push({
+				arrAnswerLocations.push({
+					name:arrNames[i],
 					x:randSubtracted,
 					y:randFull,
 					pos: "horizontal",
@@ -105,7 +149,8 @@ function generatePuzzle() {
 			if(checkIfEmptyVertical(arrNames[i].length, randFull, randSubtracted)) {
 				insertVertical(arrNames[i], randFull, randSubtracted);
 				
-				arrAnswers.push({
+				arrAnswerLocations.push({
+					name:arrNames[i],
 					x:randFull,
 					y:randSubtracted,
 					pos: "vertical",
