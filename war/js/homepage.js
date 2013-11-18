@@ -1,28 +1,50 @@
 $(function() {
 	$("#mascot-bubble").text($("#msg-default").text());
-	$("#game-icon-picture").hover(gameIconHoverIn, gameIconHoverOut);
-	$("#game-icon-search").hover(gameIconHoverIn, gameIconHoverOut);
-	$("#game-icon-trivia").hover(gameIconHoverIn, gameIconHoverOut);
+	$(".game-icon").hover(gameIconHoverIn, gameIconHoverOut);
 	
-	$("#game-icon-picture").click(gameIconPictureClick);
-	$("#game-icon-search").click(gameIconSearchClick);
+	$(".game-icon").click(gameIconClick);
+//	$("#game-icon-search").click(gameIconSearchClick);
+//	$("#game-icon-search").click(gameIconSearchClick);
 });
 
-function gameIconPictureClick(e) {
-	$("#wrap-inner").load("picture_game.html");
+function gameIconClick(e) {
+	try {
+		if(gapi.auth.getToken().access_token) {			
+			if (e.target.id == "game-icon-picture") {
+				$("#wrap-inner").load("picture_game.html");
+			} else if (e.target.id == "game-icon-search") {
+				$("#wrap-inner").load("search_game.html");
+			} else if (e.target.id == "game-icon-scramble") {
+				$("#wrap-inner").load("scramble_game.html");
+			}
+		}
+	} catch(err) {}
+	
 }
 
-function gameIconSearchClick(e) {
-	$("#wrap-inner").load("search_game.html");
-}
+//function gameIconPictureClick(e) {
+//	try {
+//		if(gapi.auth.getToken().access_token) {
+//			$("#wrap-inner").load("picture_game.html");
+//		}
+//	} catch(err) {}
+//}
+//
+//function gameIconSearchClick(e) {
+//	try {
+//		if(gapi.auth.getToken().access_token) {
+//			$("#wrap-inner").load("search_game.html");
+//		}
+//	} catch(err) {}
+//}
 
 function gameIconHoverIn(e) {
 	if (e.target.id == "game-icon-picture") {
 		$("#mascot-bubble").text($("#msg-picture").text());
 	} else if (e.target.id == "game-icon-search") {
 		$("#mascot-bubble").text($("#msg-search").text());
-	} else if (e.target.id == "game-icon-trivia") {
-		$("#mascot-bubble").text($("#msg-trivia").text());
+	} else if (e.target.id == "game-icon-scramble") {
+		$("#mascot-bubble").text($("#msg-scramble").text());
 	}
 }
 

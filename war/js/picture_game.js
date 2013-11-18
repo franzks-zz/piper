@@ -53,10 +53,6 @@ function mascotClick(e) {
 	}	
 }
 
-function btnMainMenuClick(e) {
-	$("#wrap-inner").load("homepage.html");
-}
-
 function handleDragStart(e) {
 	this.style.opacity = '0.4';
 	this.classList.add('selected');
@@ -126,14 +122,26 @@ function chooseRandomPeople(resp) {
 	for(var i=0; i<5; i++) {
 		var rand = Math.floor(Math.random()*100);
 		
-		arrPeople.push(resp.items[rand]);
-		
-		var url = arrPeople[i].image.url;
-		url = url.substring(0,url.length-2);
-		url += "150";
-		
-		arrPeoplePics.push(url);
-		arrPeopleNames.push(arrPeople[i].displayName);
+		if($.inArray(resp.items[rand],arrPeople) == -1) {			
+			arrPeople.push(resp.items[rand]);
+			
+			var url = arrPeople[i].image.url;
+			url = url.substring(0,url.length-2);
+			url += "150";
+			
+			arrPeoplePics.push(url);
+			
+			var name = arrPeople[i].displayName;
+			
+			if( (name.charAt(name.length-1) == '.') &&
+				(name.charAt(name.length-2) == ' ')) {
+				name = name.substring(0,name.length-2);
+			}
+			
+			arrPeopleNames.push(name);
+		} else {
+			i--;
+		}
 	}
 	
 	var arrRandomized = shuffle([0,1,2,3,4]);

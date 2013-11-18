@@ -182,4 +182,26 @@ html,body {
 	margin-bottom: 30px;
 }
 
+/* SCRAMBLED_GAME.HTML */
+
+.main-scramble #scramble-name {
+	margin-top: 30px;
+	text-align: center;
+	font-size: 300%;
+	color: #EEE;
+	background-color: #666;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	-khtml-border-radius: 20px;
+	-o-border-radius: 20px;
+	border-radius: 20px;
+}
+
+.main-scramble #txt-answer {
+	margin-top: 30px;
+}
+
 

@@ -15,13 +15,11 @@ function btnMainMenuClick(e) {
 }
 
 function mascotClick(e) {
-	
 	var index = $.inArray($("#txt-answer").val().toUpperCase(),arrNames);
 	
 	if(index != -1) {
 		colorAnsweredCells(arrAnswers[index]);
 	}
-
 }
 
 function colorAnsweredCells(answer) {
