@@ -1,4 +1,5 @@
 $(function() {
+	swapMascot(gender,MASCOT_REGULAR);
 	$("#mascot-bubble").text($("#msg-default").text());
 	$(".game-icon").hover(gameIconHoverIn, gameIconHoverOut);
 	

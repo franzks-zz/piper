@@ -10,7 +10,7 @@ var arrAnswers = [];
 var arrPuzzle = [];
 
 $(function() {
-	$("#mascot-img").attr("src","img/mascot_girl.png");
+	swapMascot(gender,MASCOT_REGULAR);
 	$("#mascot-bubble").text($("#msg-default").text());
 	$("#btn-main-menu").click(btnMainMenuClick);
 	$("#mascot-img").click(mascotClick);
@@ -36,22 +36,22 @@ function mascotClick(e) {
 				arrAnswers.push(answer);
 				
 				$("#mascot-bubble").text("You have found a hidden name! " + (10-arrAnswers.length) + " to go!");
-				$("#mascot-img").attr("src","img/mascot_girl.png");
+				swapMascot(gender,MASCOT_REGULAR);
 				
 				if(arrAnswers.length == 10) {
 					$("#mascot-bubble").text($("#msg-finished").text());
-					$("#mascot-img").attr("src","img/mascot_girl_win.png");
+					swapMascot(gender,MASCOT_WIN);
 					gameState = GAME_STATE_ENDED;
 				}
 				
 			} else {
 				$("#mascot-bubble").text($("#msg-duplicate").text());
-				$("#mascot-img").attr("src","img/mascot_girl_sad.png");
+				swapMascot(gender,MASCOT_SAD);
 			}
 			
 		} else {
 			$("#mascot-bubble").text($("#msg-wrong").text());
-			$("#mascot-img").attr("src","img/mascot_girl_sad.png");
+			swapMascot(gender,MASCOT_SAD);
 		}
 	} else if(gameState == GAME_STATE_ENDED) {
 		arrNames = [];
@@ -65,7 +65,7 @@ function mascotClick(e) {
 		retrievePeople();
 		
 		$("#mascot-bubble").text($("#msg-default").text());
-		$("#mascot-img").attr("src","img/mascot_girl.png");
+		swapMascot(gender,MASCOT_REGULAR);
 	}
 	
 	

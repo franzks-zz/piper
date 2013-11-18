@@ -6,8 +6,48 @@ function signinCallback(authResult) {
 	if (authResult['access_token']) {		
 		$("#signinButton").css("display", "none");
 		$("#btn-play-now").css("display", "block");
+		
+		randomizeGender();
 	} else if (authResult['error']) {
 		$("#signinButton").css("display", "block");
+	}
+}
+
+var GENDER_MALE = 1;
+var GENDER_FEMALE = 2;
+
+var MASCOT_REGULAR = 1;
+var MASCOT_SAD = 2;
+var MASCOT_WIN = 3;
+
+var gender;
+var mascotPose;
+
+function randomizeGender() {
+	gender = Math.floor(Math.random()*2+1);
+}
+
+function swapMascot(gender, mascotPose) {
+	if(gender == GENDER_MALE) {
+		
+		if(mascotPose == MASCOT_REGULAR) {
+			$("#mascot-img").attr("src","img/mascot_boy.png");
+		} else if(mascotPose == MASCOT_SAD) {
+			$("#mascot-img").attr("src","img/mascot_boy_sad.png");
+		} else if(mascotPose == MASCOT_WIN) {
+			$("#mascot-img").attr("src","img/mascot_boy_win.png");
+		}
+		
+	} else if(gender == GENDER_FEMALE) {
+		
+		if(mascotPose == MASCOT_REGULAR) {
+			$("#mascot-img").attr("src","img/mascot_girl.png");
+		} else if(mascotPose == MASCOT_SAD) {
+			$("#mascot-img").attr("src","img/mascot_girl_sad.png");
+		} else if(mascotPose == MASCOT_WIN) {
+			$("#mascot-img").attr("src","img/mascot_girl_win.png");
+		}
+		
 	}
 }
 

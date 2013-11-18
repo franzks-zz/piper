@@ -7,7 +7,7 @@ var name;
 var nameScrambled;
 
 $(function() {
-	$("#mascot-img").attr("src","img/mascot_girl.png");
+	swapMascot(gender,MASCOT_REGULAR);
 	$("#mascot-bubble").text($("#msg-default").text());
 	$("#mascot-img").click(mascotClick);
 	$("#btn-main-menu").click(btnMainMenuClick);
@@ -21,16 +21,16 @@ function mascotClick(e) {
 		answer = answer.toUpperCase();
 		
 		if(answer == name) {
-			$("#mascot-img").attr("src","img/mascot_girl_win.png");
+			swapMascot(gender,MASCOT_WIN);
 			$("#mascot-bubble").text($("#msg-correct").text());
 			gameState = GAME_STATE_ENDED;
 		} else {
-			$("#mascot-img").attr("src","img/mascot_girl_sad.png");
+			swapMascot(gender,MASCOT_SAD);
 			$("#mascot-bubble").text($("#msg-wrong").text());
 		}
 	} else if(gameState == GAME_STATE_ENDED) {
 		retrievePerson();
-		$("#mascot-img").attr("src","img/mascot_girl.png");
+		swapMascot(gender,MASCOT_REGULAR);
 		$("#mascot-bubble").text($("#msg-default").text());
 		$("#txt-answer").val("");
 		gameState = GAME_STATE_ONGOING;
