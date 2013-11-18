@@ -1,15 +1,38 @@
+var GAME_STATE_ONGOING = 1;
+var GAME_STATE_ENDED = 2;
+
+var gameState = GAME_STATE_ONGOING;
+
 var name;
 var nameScrambled;
 
 $(function() {
+	$("#mascot-bubble").text($("#msg-default").text());
 	$("#mascot-img").click(mascotClick);
 	$("#btn-main-menu").click(btnMainMenuClick);
 	retrievePerson();
 });
 
 function mascotClick(e) {
-	var answer = $("#txt-answer").val();
-	answer = answer.toUpperCase();
+	
+	if(gameState == GAME_STATE_ONGOING) {
+		var answer = $("#txt-answer").val();
+		answer = answer.toUpperCase();
+		
+		if(answer == name) {
+			$("#mascot-bubble").text($("#msg-correct").text());
+			gameState = GAME_STATE_ENDED;
+		} else {
+			$("#mascot-bubble").text($("#msg-wrong").text());
+		}
+	} else if(gameState == GAME_STATE_ENDED) {
+		retrievePerson();
+		$("#mascot-bubble").text($("#msg-default").text());
+		$("#txt-answer").val("");
+		gameState = GAME_STATE_ONGOING;
+	}
+	
+	
 }
 
 function btnMainMenuClick(e) {

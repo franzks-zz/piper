@@ -53,6 +53,10 @@ function mascotClick(e) {
 	}	
 }
 
+function btnMainMenuClick(e) {
+	$("#wrap-inner").load("homepage.html");
+}
+
 function handleDragStart(e) {
 	this.style.opacity = '0.4';
 	this.classList.add('selected');
