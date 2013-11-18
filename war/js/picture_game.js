@@ -14,7 +14,7 @@ var arrPeopleNames = [];
 var numOfMistakes = 0;
 
 $(function() {
-	
+	$("#mascot-bubble").text($("#msg-default").text());
 	$("#mascot-img").click(mascotClick);
 	$("#btn-main-menu").click(btnMainMenuClick);
 	
@@ -39,7 +39,7 @@ function mascotClick(e) {
 		if(numOfMistakes > 0) {
 			$("#mascot-bubble").text("Oooooops! There are still " + numOfMistakes + " profile picture(s) in the incorrect position.");
 		} else {
-			$("#mascot-bubble").text("Congratulations! You have correctly arranged all profile pictures in the correct order. Press me to play again.");
+			$("#mascot-bubble").text($("#msg-correct").text());
 			gameState = GAME_STATE_ENDED;
 		}
 	} else if(gameState == GAME_STATE_ENDED) {
@@ -50,6 +50,8 @@ function mascotClick(e) {
 		
 		retrievePeople();
 		gameState = GAME_STATE_ONGOING;
+		
+		$("#mascot-bubble").text($("#msg-default").text());
 	}	
 }
 
