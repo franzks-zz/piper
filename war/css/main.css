@@ -133,6 +133,27 @@ html,body {
 	margin-top: 75px;
 }
 
+.main-homepage .game-caption {
+	display: block;
+	font-size: 170%;
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+.main-homepage #game-caption-picture {
+	color: #66baf5;
+}
+
+.main-homepage #game-caption-search {
+	color: #ffcc00;
+}
+
+
+.main-homepage #game-caption-scramble {
+	color: #29cb53;
+}
+
+
 /* PICTURE_GAME.HTML */
 
 .main-picture .picture {
