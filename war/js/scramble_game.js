@@ -57,8 +57,14 @@ function retrievePerson() {
 	});
 }
 
-function chooseRandomPerson(resp) {
-	var rand = Math.floor(Math.random()*100);
+function chooseRandomPerson(resp) {	
+	var rand;
+	
+	if(resp.totalItems >= 100) {
+		rand = Math.floor(Math.random()*100);
+	} else {
+		rand = Math.floor(Math.random()*resp.totalItems);
+	}
 	
 	name = resp.items[rand].displayName;
 	

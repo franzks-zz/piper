@@ -134,7 +134,14 @@ function retrievePeople() {
 
 function chooseRandomPeople(resp) {	
 	for(var i=0; i<5; i++) {
-		var rand = Math.floor(Math.random()*100);
+		
+		var rand;
+		
+		if(resp.totalItems >= 100) {
+			rand = Math.floor(Math.random()*100);
+		} else {
+			rand = Math.floor(Math.random()*resp.totalItems);
+		}
 		
 		if($.inArray(resp.items[rand],arrPeople) == -1) {			
 			arrPeople.push(resp.items[rand]);

@@ -101,8 +101,14 @@ function retrievePeople() {
 
 function chooseRandomPeople(resp) {
 	
-	for(var i=0; i<10; i++) {
-		var rand = Math.floor(Math.random()*100);
+	for(var i=0; i<10; i++) {		
+		var rand;
+		
+		if(resp.totalItems >= 100) {
+			rand = Math.floor(Math.random()*100);
+		} else {
+			rand = Math.floor(Math.random()*resp.totalItems);
+		}
 		
 		var name = resp.items[rand].displayName;
 		name = name.toUpperCase();
