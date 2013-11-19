@@ -1,3 +1,5 @@
+$.ajaxSetup({ cache: false });
+
 $(function() {
 	$("#wrap-inner").load("landing.html");
 });
