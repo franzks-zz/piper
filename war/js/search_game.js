@@ -3,9 +3,14 @@ var GAME_STATE_ENDED = 2;
 
 var gameState = GAME_STATE_ONGOING;
 
+var COLOR_DEFAULT = "#EEEEEE";
+var COLOR_WRONG = "#ffffd4";
+var COLOR_CORRECT = "#99ff55";
+
 var arrNames = [];
 var arrAnswerLocations = [];
-var arrAnswers = [];
+
+var numOfCorrect = 0;
 
 var arrPuzzle = [];
 
@@ -15,49 +20,128 @@ $(function() {
 	$("#btn-main-menu").click(btnMainMenuClick);
 	$("#mascot-img").click(mascotClick);
 	
+	$("table").on("click","td",tdClick)
+	
 	retrievePeople();
 });
+
+var prevTdId = "-";
+var prevAnswer;
+
+function tdClick(e) {
+	
+	colorCell(prevTdId,COLOR_DEFAULT);
+	colorCells(prevAnswer,COLOR_DEFAULT);
+	
+	var coordCurrent = e.target.id.split("-");
+	var coordPrev = prevTdId.split("-");
+	
+	if(		(coordCurrent[0] == coordPrev[0]) ||
+			(coordCurrent[1] == coordPrev[1])) {
+		
+		var length;
+		var x, y;
+		var pos;
+		
+		if(coordCurrent[0] == coordPrev[0]) {
+			length = parseInt(coordCurrent[1]) - parseInt(coordPrev[1]);
+			pos = "vertical";
+		} else if(coordCurrent[1] == coordPrev[1]) {
+			length = parseInt(coordCurrent[0]) - parseInt(coordPrev[0]);
+			pos = "horizontal";
+		}
+		
+		if(length>=0) {
+			x = coordPrev[0];
+			y = coordPrev[1];
+		} else {
+			x = coordCurrent[0];
+			y = coordCurrent[1];
+		}
+		
+		var answer = {
+				x: parseInt(x),
+				y: parseInt(y),
+				length: Math.abs(length) + 1,
+				pos: pos};
+		
+		if(checkAnswer(answer)) {
+			colorCells(answer, COLOR_CORRECT);
+			numOfCorrect++;
+			
+			if(numOfCorrect == 10) {
+				finishGame();
+			}
+		} else {
+			colorCells(answer, COLOR_WRONG);
+		}
+		
+	} else {
+		colorCell(e.target.id,COLOR_WRONG);
+	}
+	
+	prevTdId = e.target.id;
+	prevAnswer = answer;
+}
+
+function colorCells(answer, color) {
+	if(answer) {
+		for(var i=0; i<answer.length; i++) {
+			if(answer.pos == "horizontal") {
+				colorCell((answer.x+i)+"-"+answer.y,color);
+			} else if(answer.pos == "vertical") {
+				colorCell(answer.x+"-"+(answer.y+i),color);
+			}
+		}
+	}
+}
+
+function colorCell(id,color) {
+	if($("#"+id).css("background-color") != COLOR_CORRECT) {
+		$("#"+id).css("background-color",color);
+	}
+}
+
+function checkAnswer(answer) {	
+	for(var i=0; i<arrAnswerLocations.length; i++) {
+		if( 	(answer.x == arrAnswerLocations[i].x) &&
+				(answer.y == arrAnswerLocations[i].y) &&
+				(answer.pos == arrAnswerLocations[i].pos) &&
+				(answer.length == arrAnswerLocations[i].length)) {
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+function finishGame() {
+	colorAllWrongCells();
+	$("#mascot-bubble").text($("#msg-finished").text());
+	swapMascot(gender,MASCOT_WIN);
+	gameState = GAME_STATE_ENDED;
+}
+
+function colorAllWrongCells() {
+	for(var i=0; i<30; i++) {
+		for(var j=0; j<30; j++) {
+			colorCell(i+"-"+j,COLOR_WRONG)
+		}
+	}
+}
 
 function btnMainMenuClick(e) {
 	$("#wrap-inner").load("homepage.html");
 }
 
 function mascotClick(e) {
-	
-	if(gameState == GAME_STATE_ONGOING) {
-		var answer = $("#txt-answer").val().toUpperCase();
+	if(gameState == GAME_STATE_ENDED) {
+		gameState = GAME_STATE_ONGOING;
 		
-		var indexNames = $.inArray(answer,arrNames);
-		var indexAnswers = $.inArray(answer,arrAnswers);
-		
-		if(indexNames != -1) {
-			if(indexAnswers == -1) {
-				colorAnsweredCells(arrAnswerLocations[indexNames]);
-				arrAnswers.push(answer);
-				
-				$("#mascot-bubble").text("You have found a hidden name! " + (10-arrAnswers.length) + " to go!");
-				swapMascot(gender,MASCOT_REGULAR);
-				
-				if(arrAnswers.length == 10) {
-					$("#mascot-bubble").text($("#msg-finished").text());
-					swapMascot(gender,MASCOT_WIN);
-					gameState = GAME_STATE_ENDED;
-				}
-				
-			} else {
-				$("#mascot-bubble").text($("#msg-duplicate").text());
-				swapMascot(gender,MASCOT_SAD);
-			}
-			
-		} else {
-			$("#mascot-bubble").text($("#msg-wrong").text());
-			swapMascot(gender,MASCOT_SAD);
-		}
-	} else if(gameState == GAME_STATE_ENDED) {
 		arrNames = [];
 		arrAnswerLocations = [];
-		arrAnswers = [];
 		arrPuzzle = [];
+		numOfCorrect = 0;
 		
 		$("table").empty();
 		$("#txt-answer").val("");
@@ -66,18 +150,6 @@ function mascotClick(e) {
 		
 		$("#mascot-bubble").text($("#msg-default").text());
 		swapMascot(gender,MASCOT_REGULAR);
-	}
-	
-	
-}
-
-function colorAnsweredCells(answer) {
-	for(var i=0; i<answer.length; i++) {
-		if(answer.pos == "horizontal") {
-			$("#"+(answer.x+i)+"-"+answer.y).css("background-color","yellow");
-		} else if(answer.pos == "vertical") {
-			$("#"+answer.x+"-"+(answer.y+i)).css("background-color","yellow");
-		}
 	}
 }
 
@@ -90,7 +162,6 @@ function retrievePeople() {
 		});
 		request.execute(function(resp) {
 			chooseRandomPeople(resp);
-			
 			temporarilyFillPuzzle();
 			generatePuzzle();
 			fillPuzzle();

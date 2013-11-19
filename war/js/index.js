@@ -90,3 +90,27 @@ function preloadImages(arrayOfImages) {
         $('<img/>')[0].src = this;
     });
 }
+
+$.cssHooks.backgroundColor = {
+    get: function(elem) {
+        if (elem.currentStyle)
+            var bg = elem.currentStyle["backgroundColor"];
+        else if (window.getComputedStyle)
+            var bg = document.defaultView.getComputedStyle(elem,
+                null).getPropertyValue("background-color");
+        if (bg.search("rgb") == -1)
+            return bg;
+        else {
+        	bg = bg.replace("rgba","rgb");
+        	if(bg.match(/,/g).length > 2) {        		
+        		bg = bg.substring(0,bg.lastIndexOf(','));
+        		bg += ')';
+        	}
+            bg = bg.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+            function hex(x) {
+                return ("0" + parseInt(x).toString(16)).slice(-2);
+            }
+            return "#" + hex(bg[1]) + hex(bg[2]) + hex(bg[3]);
+        }
+    }
+}
