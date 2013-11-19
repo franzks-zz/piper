@@ -55,11 +55,21 @@ html,body {
 	margin-top: 50px;
 }
 
+#mascot-container {
+	margin-top: 30px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-image: url('../img/mascot_background.png');
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
 .mascot-img-container {
 	text-align: right;
 }
 
 #mascot-bubble {
+	background-color: #EEEEEE;
 	border: 5px solid #555;
 	padding: 20px;
 	font-size: 130%;
