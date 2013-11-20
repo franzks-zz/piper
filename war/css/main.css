@@ -252,23 +252,35 @@ html,body {
 /* SCRAMBLED_GAME.HTML */
 
 .main-scramble #scramble-name {
-	margin-top: 30px;
 	text-align: center;
-	font-size: 150%;
-	color: #EEE;
-	background-color: #666;
-	padding-top: 10px;
-	padding-bottom: 10px;
+}
+
+.main-scramble .scramble-char {
+	display: inline-block;
 	
-	-webkit-border-radius: 20px;
-	-moz-border-radius: 20px;
-	-khtml-border-radius: 20px;
-	-o-border-radius: 20px;
-	border-radius: 20px;
-}
-
-.main-scramble #txt-answer {
+	width: 40px;
+	
 	margin-top: 30px;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding: 10px;
+	color: #EEEEEE;
+	background-color: #656565;
+	font-size: 130%;
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
+
 }
 
+.main-scramble .scramble-char.selected {
+
+}
+
+.main-scramble .scramble-char.over {
+	background-color: #949494;
+}
 

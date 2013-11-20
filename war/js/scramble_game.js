@@ -4,7 +4,9 @@ var GAME_STATE_ENDED = 2;
 var gameState = GAME_STATE_ONGOING;
 
 var name;
-var nameScrambled;
+var arrScrambledChars;
+var arrSpaceIndices = [];
+var spaceCount;
 
 $(function() {
 	swapMascot(gender,MASCOT_REGULAR);
@@ -15,28 +17,12 @@ $(function() {
 });
 
 function mascotClick(e) {
-	
-	if(gameState == GAME_STATE_ONGOING) {
-		var answer = $("#txt-answer").val();
-		answer = answer.toUpperCase();
-		
-		if(answer == name) {
-			swapMascot(gender,MASCOT_WIN);
-			$("#mascot-bubble").text($("#msg-correct").text());
-			gameState = GAME_STATE_ENDED;
-		} else {
-			swapMascot(gender,MASCOT_SAD);
-			$("#mascot-bubble").text($("#msg-wrong").text());
-		}
-	} else if(gameState == GAME_STATE_ENDED) {
+	if(gameState == GAME_STATE_ENDED) {
 		retrievePerson();
 		swapMascot(gender,MASCOT_REGULAR);
 		$("#mascot-bubble").text($("#msg-default").text());
-		$("#txt-answer").val("");
 		gameState = GAME_STATE_ONGOING;
 	}
-	
-	
 }
 
 function btnMainMenuClick(e) {
@@ -52,7 +38,8 @@ function retrievePerson() {
 		});
 		request.execute(function(resp) {
 			chooseRandomPerson(resp);
-			$("#scramble-name").text(nameScrambled);
+			displayScrambledChars();
+			attachDragListeners();
 		});
 	});
 }
@@ -73,12 +60,125 @@ function chooseRandomPerson(resp) {
 		name = name.substring(0,name.length-2);
 	}
 	
+	spaceCount = 0;
+	arrSpaceIndices = [];
+	
+	for(var i=0; i<name.length; i++) {
+		if(name.charAt(i) == ' ') {
+			arrSpaceIndices.push(i-spaceCount);
+			spaceCount++;
+		}
+	}
+	
 	name = name.toUpperCase();
 	name = name.replace(/\ /g,'');
-	name = name.replace(/\./g,'');
-	name = name.replace(/\-/g,'');
 	
-	nameScrambled = shuffle(name.split("")).join();
+	arrScrambledChars = shuffle(name.split(""));
+}
+
+function displayScrambledChars() {
+	$("#scramble-name").empty();
 	
-	nameScrambled = nameScrambled.replace(/\,/g,'');
+	for(var i=0; i<arrScrambledChars.length; i++) {
+		
+		if($.inArray(i,arrSpaceIndices) != -1) {
+			$("#scramble-name").append($("<br>"));
+		}
+		
+		var div = $("<div>");
+		div.addClass("scramble-char");
+		div.attr("draggable",true);
+		div.html(arrScrambledChars[i]);
+		
+		var wrapper = $("<div>");
+		wrapper.css("display","inline-block");
+		wrapper.append(div);
+		
+		$("#scramble-name").append(wrapper);
+	}
+}
+
+// DRAGGING
+var dragSrcEl = null;
+var arrScrambledCharDivs = [];
+
+function handleDragStart(e) {
+	this.style.opacity = '0.4';
+
+	dragSrcEl = this;
+
+	e.dataTransfer.effectAllowed = 'move';
+	e.dataTransfer.setData('text/html', this.innerHTML);
+}
+
+function handleDragOver(e) {
+	if(e.preventDefault) {
+		e.preventDefault();
+	}
+
+	e.dataTransfer.dropEffect = 'move';
+
+	return false;
+}
+
+function handleDragEnter(e) {
+	this.classList.add('over');
+}
+
+function handleDragLeave(e) {
+	this.classList.remove('over');
+}
+
+function handleDragEnd(e) {
+	[].forEach.call(arrScrambledCharDivs, function(pic) {
+		pic.classList.remove('over');
+		pic.style.opacity = '1';
+	})
+}
+
+function handleDrop(e) {
+	if(e.stopPropagation) {
+		e.stopPropagation();
+	}
+
+	if(dragSrcEl != this) {
+		var parent = $(this).parent();
+		var temp = $(dragSrcEl).replaceWith(this);
+		
+		$(parent).prepend(temp);
+	}
+	
+	if(checkAnswer()) {
+		finishGame();
+	}
+	
+	return false;
+}
+
+function attachDragListeners() {
+	arrScrambledCharDivs = document.querySelectorAll('.scramble-char');
+	[].forEach.call(arrScrambledCharDivs, function(div) {
+		div.addEventListener('dragstart', handleDragStart, false);
+		div.addEventListener('dragenter', handleDragEnter, false);
+		div.addEventListener('dragover', handleDragOver, false);
+		div.addEventListener('dragleave', handleDragLeave, false);
+		div.addEventListener('drop', handleDrop, false);
+		div.addEventListener('dragend', handleDragEnd, false);
+	})
+}
+
+function checkAnswer() {
+	var arrCharAnswers = $(".scramble-char");
+	for(var i=0; i<arrCharAnswers.length; i++) {
+		if($(arrCharAnswers[i]).text() != name.charAt(i)) {
+			return false;
+		}
+	}
+	return true;
+}
+
+function finishGame() {
+	swapMascot(gender,MASCOT_WIN);
+	$("#mascot-bubble").text($("#msg-correct").text());
+	gameState = GAME_STATE_ENDED;
 }
