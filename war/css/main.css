@@ -57,6 +57,7 @@ html,body {
 
 #mascot-container {
 	margin-top: 30px;
+	margin-bottom: 30px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	background-image: url('../img/mascot_background.png');
@@ -110,6 +111,7 @@ html,body {
 #btn-play-now {
 	display: none;
 	margin-top: 30px;
+	margin-bottom: 30px;
 	padding: 15px;
 	background-color: #dd4f59;
 	text-align: center;
@@ -151,15 +153,12 @@ html,body {
 	text-align: center;
 }
 
-.main-homepage .game-icon {
-	margin-top: 75px;
-}
-
 .main-homepage .game-caption {
 	display: block;
 	font-size: 170%;
 	font-weight: bold;
 	margin-top: 10px;
+	margin-bottom: 30px;
 }
 
 .main-homepage #game-caption-picture {
@@ -242,6 +241,16 @@ html,body {
 .main-search .table tbody>tr>td {
 	padding: 0;
 	text-align: center;
+}
+
+.main-search #name-list-left {
+	text-align: right;
+}
+
+.main-search .name-list-span {
+	display: block;
+	margin-top: 10px;
+	font-size: 200%;
 }
 
 .main-search #mascot-img,

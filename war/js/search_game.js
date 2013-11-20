@@ -8,6 +8,7 @@ var COLOR_WRONG = "#ffffd4";
 var COLOR_CORRECT = "#99ff55";
 
 var arrNames = [];
+var arrNamesPreserved = [];
 var arrAnswerLocations = [];
 
 var numOfCorrect = 0;
@@ -65,8 +66,11 @@ function tdClick(e) {
 				length: Math.abs(length) + 1,
 				pos: pos};
 		
-		if(checkAnswer(answer)) {
+		var result = checkAnswer(answer);
+		
+		if(result != -1) {
 			colorCells(answer, COLOR_CORRECT);
+			highlightNameList(arrNames[result]);
 			numOfCorrect++;
 			
 			if(numOfCorrect == 10) {
@@ -102,17 +106,34 @@ function colorCell(id,color) {
 	}
 }
 
+function highlightNameList(answer) {
+	var listSpan = $(".name-list-span");
+	
+	for(var i=0; i<listSpan.length; i++) {
+		
+		var namePreserved = listSpan[i].textContent;
+		namePreserved = namePreserved.replace(/\ /g,'');
+		namePreserved = namePreserved.replace(/\-/g,'');
+
+		if(namePreserved == answer) {
+			$(listSpan[i]).css("color","green");
+		}
+	}
+	
+	
+}
+
 function checkAnswer(answer) {	
 	for(var i=0; i<arrAnswerLocations.length; i++) {
 		if( 	(answer.x == arrAnswerLocations[i].x) &&
 				(answer.y == arrAnswerLocations[i].y) &&
 				(answer.pos == arrAnswerLocations[i].pos) &&
 				(answer.length == arrAnswerLocations[i].length)) {
-			return true;
+			return i;
 		}
 	}
 	
-	return false;
+	return -1;
 }
 
 function finishGame() {
@@ -139,12 +160,13 @@ function mascotClick(e) {
 		gameState = GAME_STATE_ONGOING;
 		
 		arrNames = [];
+		arrNamesPreserved = [];
 		arrAnswerLocations = [];
 		arrPuzzle = [];
 		numOfCorrect = 0;
 		
 		$("table").empty();
-		$("#txt-answer").val("");
+		$(".name-list").empty();
 		
 		retrievePeople();
 		
@@ -182,13 +204,23 @@ function chooseRandomPeople(resp) {
 		}
 		
 		var name = resp.items[rand].displayName;
+		
+		if( (name.charAt(name.length-1) == '.') &&
+			(name.charAt(name.length-2) == ' ')) {
+			name = name.substring(0,name.length-2);
+		}
+		
 		name = name.toUpperCase();
-		name = name.replace(/\ /g,'');
 		name = name.replace(/\./g,'');
+		
+		var namePreserved = name;
+		
+		name = name.replace(/\ /g,'');
 		name = name.replace(/\-/g,'');
 		
 		if($.inArray(name,arrNames) == -1) {
 			arrNames.push(name);
+			arrNamesPreserved.push(namePreserved);
 		} else {
 			i--;
 		}
@@ -276,6 +308,18 @@ function displayPuzzle() {
 		}
 		
 		$("table").append(tr);
+	}
+	
+	for(var i=0; i<10; i++) {
+		var span = $("<span>");
+		span.addClass("name-list-span");
+		span.text(arrNamesPreserved[i]);
+		
+		if(i<5) {
+			$("#name-list-left").append(span);
+		} else {
+			$("#name-list-right").append(span);
+		}
 	}
 }
 
