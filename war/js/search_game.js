@@ -157,22 +157,26 @@ function btnMainMenuClick(e) {
 
 function mascotClick(e) {
 	if(gameState == GAME_STATE_ENDED) {
-		gameState = GAME_STATE_ONGOING;
-		
-		arrNames = [];
-		arrNamesPreserved = [];
-		arrAnswerLocations = [];
-		arrPuzzle = [];
-		numOfCorrect = 0;
-		
-		$("table").empty();
-		$(".name-list").empty();
-		
-		retrievePeople();
-		
-		$("#mascot-bubble").text($("#msg-default").text());
-		swapMascot(gender,MASCOT_REGULAR);
+		restart();
 	}
+}
+
+function restart() {
+	gameState = GAME_STATE_ONGOING;
+	
+	arrNames = [];
+	arrNamesPreserved = [];
+	arrAnswerLocations = [];
+	arrPuzzle = [];
+	numOfCorrect = 0;
+	
+	$("table").empty();
+	$(".name-list").empty();
+	
+	retrievePeople();
+	
+	$("#mascot-bubble").text($("#msg-default").text());
+	swapMascot(gender,MASCOT_REGULAR);
 }
 
 function retrievePeople() {
@@ -240,7 +244,10 @@ function temporarilyFillPuzzle() {
 	}
 }
 
-function generatePuzzle() {	
+function generatePuzzle() {
+	
+	var count = 0;
+	
 	for(var i=0; i<10; i++) {
 		var randFull = Math.floor(Math.random()*30);
 		var randSubtracted = Math.floor(Math.random()*(30-arrNames[i].length));
@@ -274,6 +281,10 @@ function generatePuzzle() {
 				i--;
 			}
 		}
+		
+		if(++count > 100) {
+			restart();
+		} 
 	}
 }
 
