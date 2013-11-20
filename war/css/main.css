@@ -239,8 +239,8 @@ html,body {
 	user-select: none;
 }
 
-.main-search td {
-	padding-left: 0px;
+.main-search .table tbody>tr>td {
+	padding: 0;
 	text-align: center;
 }
 
