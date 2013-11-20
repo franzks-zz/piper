@@ -4,6 +4,7 @@ var GAME_STATE_ENDED = 2;
 var gameState = GAME_STATE_ONGOING;
 
 var name;
+var image;
 var arrScrambledChars;
 var arrSpaceIndices = [];
 var spaceCount;
@@ -74,6 +75,17 @@ function chooseRandomPerson(resp) {
 	name = name.replace(/\ /g,'');
 	
 	arrScrambledChars = shuffle(name.split(""));
+	
+	// Show Blurred Profile Photo as a clue
+	var image = resp.items[rand].image.url;
+	image = image.substring(0,image.length-2);
+	image += "150";
+	$("#blurred-image").attr("src",image);
+	
+	var vague = $("#blurred-image").Vague({
+		intensity: 15
+	});
+	vague.blur();
 }
 
 function displayScrambledChars() {

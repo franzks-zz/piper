@@ -260,11 +260,15 @@ html,body {
 
 /* SCRAMBLED_GAME.HTML */
 
+.main-scramble #blurred-image {
+	margin-top: 30px;
+}
+
 .main-scramble #scramble-name {
-	text-align: center;
 }
 
 .main-scramble .scramble-char {
+	text-align: center;
 	display: inline-block;
 	
 	width: 40px;
@@ -282,10 +286,6 @@ html,body {
 	-khtml-border-radius: 5px;
 	-o-border-radius: 5px;
 	border-radius: 5px;
-
-}
-
-.main-scramble .scramble-char.selected {
 
 }
 
