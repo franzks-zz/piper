@@ -16,20 +16,29 @@ $(function() {
 	$("#mascot-bubble").text($("#msg-default").text());
 	$("#mascot-img").click(mascotClick);
 	$("#btn-main-menu").click(btnMainMenuClick);
+	$("#btn-skip").click(btnSkipClick);
 	retrievePerson();
 });
 
 function mascotClick(e) {
 	if(gameState == GAME_STATE_ENDED) {
-		retrievePerson();
-		swapMascot(gender,MASCOT_REGULAR);
-		$("#mascot-bubble").text($("#msg-default").text());
-		gameState = GAME_STATE_ONGOING;
+		restart();
 	}
+}
+
+function restart() {
+	retrievePerson();
+	swapMascot(gender,MASCOT_REGULAR);
+	$("#mascot-bubble").text($("#msg-default").text());
+	gameState = GAME_STATE_ONGOING;
 }
 
 function btnMainMenuClick(e) {
 	$("#wrap-inner").load("homepage.html");
+}
+
+function btnSkipClick(e) {
+	restart();
 }
 
 function retrievePerson() {

@@ -19,6 +19,7 @@ $(function() {
 	swapMascot(gender,MASCOT_REGULAR);
 	$("#mascot-bubble").text($("#msg-default").text());
 	$("#btn-main-menu").click(btnMainMenuClick);
+	$("#btn-skip").click(btnSkipClick);
 	$("#mascot-img").click(mascotClick);
 	
 	$("table").on("click","td",tdClick)
@@ -153,6 +154,10 @@ function colorAllWrongCells() {
 
 function btnMainMenuClick(e) {
 	$("#wrap-inner").load("homepage.html");
+}
+
+function btnSkipClick(e) {
+	restart();
 }
 
 function mascotClick(e) {

@@ -18,6 +18,7 @@ $(function() {
 	$("#mascot-bubble").text($("#msg-default").text());
 	$("#mascot-img").click(mascotClick);
 	$("#btn-main-menu").click(btnMainMenuClick);
+	$("#btn-skip").click(btnSkipClick);
 	
 	arrPictureWrappers = document.querySelectorAll('.picture-wrapper');
 	[].forEach.call(arrPictureWrappers, function(pic) {
@@ -50,21 +51,29 @@ function mascotClick(e) {
 			gameState = GAME_STATE_ENDED;
 		}
 	} else if(gameState == GAME_STATE_ENDED) {
-		arrPeople = [];
-		arrPeoplePics = [];
-		arrPeoplePicsRandomized = [];
-		arrPeopleNames = [];
-		
-		retrievePeople();
-		gameState = GAME_STATE_ONGOING;
-		
-		$("#mascot-bubble").text($("#msg-default").text());
-		swapMascot(gender,MASCOT_REGULAR);
+		restart();
 	}	
+}
+
+function restart() {
+	arrPeople = [];
+	arrPeoplePics = [];
+	arrPeoplePicsRandomized = [];
+	arrPeopleNames = [];
+	
+	retrievePeople();
+	gameState = GAME_STATE_ONGOING;
+	
+	$("#mascot-bubble").text($("#msg-default").text());
+	swapMascot(gender,MASCOT_REGULAR);
 }
 
 function btnMainMenuClick(e) {
 	$("#wrap-inner").load("homepage.html");
+}
+
+function btnSkipClick(e) {
+	restart();
 }
 
 function handleDragStart(e) {
