@@ -18,7 +18,8 @@ $(function() {
 	$("#mascot-bubble").text($("#msg-default").text());
 	$("#mascot-img").click(mascotClick);
 	$("#btn-main-menu").click(btnMainMenuClick);
-	$("#btn-skip").click(btnSkipClick);
+	$("#btn-new").click(btnNewClick);
+	$("#btn-reveal").click(btnRevealClick);
 	
 	arrPictureWrappers = document.querySelectorAll('.picture-wrapper');
 	[].forEach.call(arrPictureWrappers, function(pic) {
@@ -44,11 +45,7 @@ function mascotClick(e) {
 			swapMascot(gender,MASCOT_SAD);
 			
 		} else {
-			$("#mascot-bubble").text($("#msg-correct").text());
-
-			swapMascot(gender,MASCOT_WIN);
-			
-			gameState = GAME_STATE_ENDED;
+			finishGame();
 		}
 	} else if(gameState == GAME_STATE_ENDED) {
 		restart();
@@ -68,12 +65,23 @@ function restart() {
 	swapMascot(gender,MASCOT_REGULAR);
 }
 
+function finishGame() {
+	$("#mascot-bubble").text($("#msg-correct").text());
+	swapMascot(gender,MASCOT_WIN);
+	gameState = GAME_STATE_ENDED;
+}
+
 function btnMainMenuClick(e) {
 	$("#wrap-inner").load("homepage.html");
 }
 
-function btnSkipClick(e) {
+function btnNewClick(e) {
 	restart();
+}
+
+function btnRevealClick(e) {
+	displayPeople(arrPeoplePics);
+	finishGame();
 }
 
 function handleDragStart(e) {
@@ -136,7 +144,7 @@ function retrievePeople() {
 		});
 		request.execute(function(resp) {
 			chooseRandomPeople(resp);
-			displayPeople();
+			displayPeople(arrPeoplePicsRandomized);
 		});
 	});
 }
@@ -181,10 +189,10 @@ function chooseRandomPeople(resp) {
 	}
 }
 
-function displayPeople() {	
+function displayPeople(arrPeoplePics) {	
 	for(var i=1; i<=5; i++) {
 		$("#name-" + i).text(arrPeopleNames[i-1]);
-		$("#picture-" + i).css("background-image","url('"+arrPeoplePicsRandomized[i-1]+"')");
+		$("#picture-" + i).css("background-image","url('"+arrPeoplePics[i-1]+"')");
 	}
 }
 
