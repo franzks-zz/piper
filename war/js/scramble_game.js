@@ -85,7 +85,7 @@ function chooseRandomPerson(resp) {
 	$("#blurred-image").attr("src",image);
 	
 	vague = $("#blurred-image").Vague({
-		intensity: 15
+		intensity: 5
 	});
 	vague.blur();
 }
