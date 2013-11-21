@@ -186,6 +186,7 @@ function checkAnswer() {
 		
 		var pictureWrapper = $(".picture-wrapper")[i];
 		var url = $(pictureWrapper).css("background-image");
+		url = url.replace(/"/g,'');
 		url = url.substring(4,url.length-1);
 		
 		if(arrPeoplePics[i] != url) {
