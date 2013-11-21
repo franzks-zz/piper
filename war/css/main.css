@@ -44,8 +44,14 @@ html,body {
 }
 
 #signinButton-wrapper {
-	margin-top: 50px;
+	margin-top: 20px;
 	text-align: center;
+}
+
+#demo-video {
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 20px;
 }
 
 /* MASCOT */
@@ -115,7 +121,6 @@ html,body {
 	cursor: pointer;
 	display: none;
 	margin-top: 30px;
-	margin-bottom: 30px;
 	padding: 15px;
 	background-color: #dd4f59;
 	text-align: center;
