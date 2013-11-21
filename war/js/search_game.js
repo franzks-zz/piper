@@ -32,62 +32,63 @@ var prevTdId = "-";
 var prevAnswer;
 
 function tdClick(e) {
-	
-	colorCell(prevTdId,COLOR_DEFAULT);
-	colorCells(prevAnswer,COLOR_DEFAULT);
-	
-	var coordCurrent = e.target.id.split("-");
-	var coordPrev = prevTdId.split("-");
-	
-	if(		(coordCurrent[0] == coordPrev[0]) ||
-			(coordCurrent[1] == coordPrev[1])) {
+	if(gameState == GAME_STATE_ONGOING) {
+		colorCell(prevTdId,COLOR_DEFAULT);
+		colorCells(prevAnswer,COLOR_DEFAULT);
 		
-		var length;
-		var x, y;
-		var pos;
+		var coordCurrent = e.target.id.split("-");
+		var coordPrev = prevTdId.split("-");
 		
-		if(coordCurrent[0] == coordPrev[0]) {
-			length = parseInt(coordCurrent[1]) - parseInt(coordPrev[1]);
-			pos = "vertical";
-		} else if(coordCurrent[1] == coordPrev[1]) {
-			length = parseInt(coordCurrent[0]) - parseInt(coordPrev[0]);
-			pos = "horizontal";
-		}
-		
-		if(length>=0) {
-			x = coordPrev[0];
-			y = coordPrev[1];
-		} else {
-			x = coordCurrent[0];
-			y = coordCurrent[1];
-		}
-		
-		var answer = {
-				x: parseInt(x),
-				y: parseInt(y),
-				length: Math.abs(length) + 1,
-				pos: pos};
-		
-		var result = checkAnswer(answer);
-		
-		if(result != -1) {
-			colorCells(answer, COLOR_CORRECT);
-			highlightNameList(arrNames[result]);
-			numOfCorrect++;
+		if(		(coordCurrent[0] == coordPrev[0]) ||
+				(coordCurrent[1] == coordPrev[1])) {
 			
-			if(numOfCorrect == 10) {
-				finishGame();
+			var length;
+			var x, y;
+			var pos;
+			
+			if(coordCurrent[0] == coordPrev[0]) {
+				length = parseInt(coordCurrent[1]) - parseInt(coordPrev[1]);
+				pos = "vertical";
+			} else if(coordCurrent[1] == coordPrev[1]) {
+				length = parseInt(coordCurrent[0]) - parseInt(coordPrev[0]);
+				pos = "horizontal";
 			}
+			
+			if(length>=0) {
+				x = coordPrev[0];
+				y = coordPrev[1];
+			} else {
+				x = coordCurrent[0];
+				y = coordCurrent[1];
+			}
+			
+			var answer = {
+					x: parseInt(x),
+					y: parseInt(y),
+					length: Math.abs(length) + 1,
+					pos: pos};
+			
+			var result = checkAnswer(answer);
+			
+			if(result != -1) {
+				colorCells(answer, COLOR_CORRECT);
+				highlightNameList(arrNames[result]);
+				numOfCorrect++;
+				
+				if(numOfCorrect == 10) {
+					finishGame();
+				}
+			} else {
+				colorCells(answer, COLOR_WRONG);
+			}
+			
 		} else {
-			colorCells(answer, COLOR_WRONG);
+			colorCell(e.target.id,COLOR_WRONG);
 		}
 		
-	} else {
-		colorCell(e.target.id,COLOR_WRONG);
+		prevTdId = e.target.id;
+		prevAnswer = answer;
 	}
-	
-	prevTdId = e.target.id;
-	prevAnswer = answer;
 }
 
 function colorCells(answer, color) {
