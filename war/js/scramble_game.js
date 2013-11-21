@@ -9,6 +9,8 @@ var arrScrambledChars;
 var arrSpaceIndices = [];
 var spaceCount;
 
+var vague;
+
 $(function() {
 	swapMascot(gender,MASCOT_REGULAR);
 	$("#mascot-bubble").text($("#msg-default").text());
@@ -82,7 +84,7 @@ function chooseRandomPerson(resp) {
 	image += "150";
 	$("#blurred-image").attr("src",image);
 	
-	var vague = $("#blurred-image").Vague({
+	vague = $("#blurred-image").Vague({
 		intensity: 15
 	});
 	vague.blur();
@@ -190,6 +192,7 @@ function checkAnswer() {
 }
 
 function finishGame() {
+	vague.unblur();
 	swapMascot(gender,MASCOT_WIN);
 	$("#mascot-bubble").text($("#msg-correct").text());
 	gameState = GAME_STATE_ENDED;
