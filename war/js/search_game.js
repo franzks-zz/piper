@@ -20,6 +20,7 @@ $(function() {
 	$("#mascot-bubble").text($("#msg-default").text());
 	$("#btn-main-menu").click(btnMainMenuClick);
 	$("#btn-skip").click(btnSkipClick);
+	$("#btn-reveal").click(btnRevealClick);
 	$("#mascot-img").click(mascotClick);
 	
 	$("table").on("click","td",tdClick)
@@ -158,6 +159,17 @@ function btnMainMenuClick(e) {
 
 function btnSkipClick(e) {
 	restart();
+}
+
+function btnRevealClick(e) {
+	for(var i=0; i<arrAnswerLocations.length; i++) {
+		colorCells(arrAnswerLocations[i],COLOR_CORRECT);
+	}
+	
+	colorAllWrongCells();
+	$(".name-list-span").css('color','green');
+	
+	finishGame();
 }
 
 function mascotClick(e) {
