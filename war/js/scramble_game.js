@@ -16,7 +16,8 @@ $(function() {
 	$("#mascot-bubble").text($("#msg-default").text());
 	$("#mascot-img").click(mascotClick);
 	$("#btn-main-menu").click(btnMainMenuClick);
-	$("#btn-skip").click(btnSkipClick);
+	$("#btn-new").click(btnNewClick);
+	$("#btn-reveal").click(btnRevealClick);
 	retrievePerson();
 });
 
@@ -37,8 +38,13 @@ function btnMainMenuClick(e) {
 	$("#wrap-inner").load("homepage.html");
 }
 
-function btnSkipClick(e) {
+function btnNewClick(e) {
 	restart();
+}
+
+function btnRevealClick(e) {
+	finishGame();
+	displayChars(name.split(""));
 }
 
 function retrievePerson() {
@@ -50,7 +56,7 @@ function retrievePerson() {
 		});
 		request.execute(function(resp) {
 			chooseRandomPerson(resp);
-			displayScrambledChars();
+			displayChars(arrScrambledChars);
 			attachDragListeners();
 		});
 	});
@@ -99,10 +105,10 @@ function chooseRandomPerson(resp) {
 	vague.blur();
 }
 
-function displayScrambledChars() {
+function displayChars(arrChars) {
 	$("#scramble-name").empty();
 	
-	for(var i=0; i<arrScrambledChars.length; i++) {
+	for(var i=0; i<arrChars.length; i++) {
 		
 		if($.inArray(i,arrSpaceIndices) != -1) {
 			$("#scramble-name").append($("<br>"));
@@ -111,7 +117,7 @@ function displayScrambledChars() {
 		var div = $("<div>");
 		div.addClass("scramble-char");
 		div.attr("draggable",true);
-		div.html(arrScrambledChars[i]);
+		div.html(arrChars[i]);
 		
 		var wrapper = $("<div>");
 		wrapper.css("display","inline-block");

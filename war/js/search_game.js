@@ -19,7 +19,7 @@ $(function() {
 	swapMascot(gender,MASCOT_REGULAR);
 	$("#mascot-bubble").text($("#msg-default").text());
 	$("#btn-main-menu").click(btnMainMenuClick);
-	$("#btn-skip").click(btnSkipClick);
+	$("#btn-new").click(btnNewClick);
 	$("#btn-reveal").click(btnRevealClick);
 	$("#mascot-img").click(mascotClick);
 	
@@ -158,7 +158,7 @@ function btnMainMenuClick(e) {
 	$("#wrap-inner").load("homepage.html");
 }
 
-function btnSkipClick(e) {
+function btnNewClick(e) {
 	restart();
 }
 
