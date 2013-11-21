@@ -43,9 +43,8 @@ html,body {
 	margin-top: 30px;
 }
 
-#signinButton {
-	display: none;
-	padding-top: 50px;
+#signinButton-wrapper {
+	margin-top: 50px;
 	text-align: center;
 }
 
