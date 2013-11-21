@@ -55,6 +55,10 @@ html,body {
 	margin-top: 50px;
 }
 
+#mascot-img {
+	cursor: pointer;
+}
+
 #mascot-container {
 	margin-top: 30px;
 	margin-bottom: 30px;
@@ -109,6 +113,7 @@ html,body {
 }
 
 #btn-play-now {
+	cursor: pointer;
 	display: none;
 	margin-top: 30px;
 	margin-bottom: 30px;
@@ -151,6 +156,10 @@ html,body {
 .main-homepage #game-chooser {
 	display: block;
 	text-align: center;
+}
+
+.main-homepage .game-icon {
+	cursor: pointer;
 }
 
 .main-homepage .game-caption {
