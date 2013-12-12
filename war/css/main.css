@@ -123,7 +123,7 @@ html,body {
 	margin-top: 20px;
 }
 
-#btn-play-now {
+#btn-play {
 	cursor: pointer;
 	display: none;
 	margin-top: 30px;
@@ -140,7 +140,7 @@ html,body {
 	border-radius: 5px;
 }
 
-#btn-play-now:hover {
+#btn-play:hover {
 	background-color: #e4747c;
 	text-decoration: none;
 }

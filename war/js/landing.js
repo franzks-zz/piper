@@ -1,7 +1,7 @@
 $(function() {
-	$("#btn-play-now").click(btnPlayNowClick);
+	$("#btn-play").click(btnPlayClick);
 });
 
-function btnPlayNowClick(e) {
+function btnPlayClick(e) {
 	$("#wrap-inner").load("homepage.html");
 }

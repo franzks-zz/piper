@@ -1,4 +1,4 @@
-$.ajaxSetup({ cache: false });
+//$.ajaxSetup({ cache: false });
 
 $(function() {
 	$("#wrap-inner").load("landing.html");
@@ -16,7 +16,7 @@ function signinCallback(authResult) {
 			});
 			request.execute(function(resp) {
 				if(resp.totalItems >= 10) {
-					$("#btn-play-now").css("display", "block");
+					$("#btn-play").css("display", "block");
 				} else {
 					$("#msg-error").css("display", "block");
 				}
