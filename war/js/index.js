@@ -5,8 +5,11 @@ $(function() {
 	$("#btn-sign-out").click(btnSignOutClick);
 });
 
+var justSignedOut = false;
+
 function btnSignOutClick(e) {
-	
+	justSignedOut = true;
+	gapi.auth.signOut();
 }
 
 function signinCallback(authResult) {
@@ -39,7 +42,11 @@ function signinCallback(authResult) {
 		
 		randomizeGender();
 	} else if (authResult['error']) {
-		$("#signinButton").css("display", "block");
+		if(justSignedOut) {
+			document.location.href="/";
+		} else {
+			$("#signinButton").css("display", "block");
+		}
 	}
 }
 
