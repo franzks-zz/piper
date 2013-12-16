@@ -123,12 +123,29 @@ html,body {
 	margin-top: 20px;
 }
 
+#profile {
+	margin-top: 20px;
+	height: 30px;
+	display: none;
+}
+
+#welcome-message {
+	display: inline-block;
+	line-height: 30px;
+	height: 30px;
+}
+
+#profile-photo {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
 #btn-play {
 	cursor: pointer;
 	display: none;
 	margin-top: 30px;
 	padding: 15px;
-	background-color: #dd4f59;
+	background-color: #d9534f;
 	text-align: center;
 	color: #FFF;
 	font-size: 200%;

@@ -2,7 +2,12 @@
 
 $(function() {
 	$("#wrap-inner").load("landing.html");
+	$("#btn-sign-out").click(btnSignOutClick);
 });
+
+function btnSignOutClick(e) {
+	
+}
 
 function signinCallback(authResult) {
 	if (authResult['access_token']) {		
@@ -23,10 +28,29 @@ function signinCallback(authResult) {
 			});
 		});
 		
+		gapi.client.load('plus', 'v1', function() {
+			var request = gapi.client.plus.people.get({
+				'userId' : 'me'
+			});
+			request.execute(function(resp) {
+				displayUser(resp);
+			});
+		});
+		
 		randomizeGender();
 	} else if (authResult['error']) {
 		$("#signinButton").css("display", "block");
 	}
+}
+
+function displayUser(resp) {
+	console.log(resp);
+	var url = resp.image.url;
+	url = url.substring(0,url.length-2);
+	url += "30";
+	$("#profile-photo").attr('src',url);
+	$("#welcome-message").text("Welcome, " + resp.displayName + "!");
+	$("#profile").css('display', 'block');
 }
 
 var GENDER_MALE = 1;
