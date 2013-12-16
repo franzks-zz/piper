@@ -6,6 +6,29 @@ html,body {
 	background-color: #FFFFFF;
 }
 
+/* loading screen */
+
+#loading {
+	text-align: center;
+	margin-top: 50px;
+	display: none;
+}
+
+@keyframes floating {
+	from {margin-top: 50px;}
+	to {margin-top: 60px;}
+}
+
+@-webkit-keyframes floating {
+	from {margin-top: 50px;}
+	to {margin-top: 60px;}
+}
+
+#loading img {
+	animation: floating 0.5s linear 0s infinite alternate;
+	-webkit-animation: floating 0.5s linear 0s infinite alternate;
+}
+
 /* Wrapper for page content to push down footer */
 #wrap {
 	min-height: 100%;

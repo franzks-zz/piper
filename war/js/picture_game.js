@@ -76,6 +76,8 @@ function btnMainMenuClick(e) {
 }
 
 function btnNewClick(e) {
+	$("#wrap-inner").css('display','none');
+	$("#loading").css('display','block');
 	restart();
 }
 
@@ -145,6 +147,8 @@ function retrievePeople() {
 		request.execute(function(resp) {
 			chooseRandomPeople(resp);
 			displayPeople(arrPeoplePicsRandomized);
+			$("#loading").css('display','none');
+			$("#wrap-inner").css('display','block');
 		});
 	});
 }

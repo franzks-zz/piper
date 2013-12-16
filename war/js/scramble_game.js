@@ -39,6 +39,8 @@ function btnMainMenuClick(e) {
 }
 
 function btnNewClick(e) {
+	$("#wrap-inner").css('display','none');
+	$("#loading").css('display','block');
 	restart();
 }
 
@@ -58,6 +60,8 @@ function retrievePerson() {
 			chooseRandomPerson(resp);
 			displayChars(arrScrambledChars);
 			attachDragListeners();
+			$("#loading").css('display','none');
+			$("#wrap-inner").css('display','block');
 		});
 	});
 }

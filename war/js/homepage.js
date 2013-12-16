@@ -14,6 +14,9 @@ $(function() {
 function gameIconClick(e) {
 	try {
 		if (gapi.auth.getToken().access_token) {
+			$("#wrap-inner").css('display','none');
+			$("#loading").css('display','block');
+			
 			if (e.target.id == "game-icon-picture") {
 				$("#wrap-inner").load("picture_game.html");
 			} else if (e.target.id == "game-icon-search") {
