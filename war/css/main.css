@@ -3,7 +3,7 @@ html,body {
 	/* The html and body elements cannot have any padding or margin. */
 
 	font-family: 'Open Sans', sans-serif;
-	background-color: #EEEEEE;
+	background-color: #FFFFFF;
 }
 
 /* Wrapper for page content to push down footer */
@@ -95,36 +95,14 @@ html,body {
 	text-align: justify;
 }
 
-#mascot-bubble:before {
-	content: ' ';
-	position: absolute;
-	width: 0;
-	height: 0;
-	left: -30px;
-	top: 75px;
-	border: 25px solid;
-	border-color: transparent #555 transparent transparent;
-}
-
-#mascot-bubble:after {
-	content: ' ';
-	position: absolute;
-	width: 0;
-	height: 0;
-	left: -24px;
-	top: 75px;
-	border: 25px solid;
-	border-color: transparent #EEEEEE transparent transparent;
-}
-
 /* INDEX.HTML */
 
 #logo img {
 	margin-top: 20px;
 }
 
-#profile {
-	margin-top: 20px;
+#nav-profile {
+	margin-top: 30px;
 	height: 30px;
 	display: none;
 }
@@ -135,7 +113,7 @@ html,body {
 	height: 30px;
 }
 
-#profile-photo {
+#nav-profile-photo {
 	margin-left: 5px;
 	margin-right: 5px;
 }

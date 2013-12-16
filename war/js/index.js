@@ -51,13 +51,12 @@ function signinCallback(authResult) {
 }
 
 function displayUser(resp) {
-	console.log(resp);
 	var url = resp.image.url;
 	url = url.substring(0,url.length-2);
 	url += "30";
-	$("#profile-photo").attr('src',url);
+	$("#nav-profile-photo").attr('src',url);
 	$("#welcome-message").text("Welcome, " + resp.displayName + "!");
-	$("#profile").css('display', 'block');
+	$("#nav-profile").css('display', 'block');
 }
 
 var GENDER_MALE = 1;
