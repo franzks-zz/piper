@@ -1,9 +1,14 @@
-//$.ajaxSetup({ cache: false });
+$.ajaxSetup({ cache: false });
 
 $(function() {
 	$("#wrap-inner").load("landing.html");
+	$("#logo").click(logoClick);
 	$("#btn-sign-out").click(btnSignOutClick);
 });
+
+function logoClick(e) {
+	document.location.href="/";
+}
 
 var justSignedOut = false;
 

@@ -3,25 +3,36 @@ html,body {
 	/* The html and body elements cannot have any padding or margin. */
 
 	font-family: 'Open Sans', sans-serif;
-	background-color: #FFFFFF;
+	background-color: #64e777;
+}
+
+.container {
+	width: 100%;
+	max-width: 100%;
+}
+
+.row {
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 /* loading screen */
 
 #loading {
 	text-align: center;
-	margin-top: 50px;
+	padding-top: 50px;
 	display: none;
 }
 
 @keyframes floating {
-	from {margin-top: 50px;}
-	to {margin-top: 60px;}
+	from {padding-top: 50px;}
+	to {padding-top: 60px;}
 }
 
 @-webkit-keyframes floating {
-	from {margin-top: 50px;}
-	to {margin-top: 60px;}
+	from {padding-top: 50px;}
+	to {padding-top: 60px;}
 }
 
 #loading img {
@@ -43,14 +54,14 @@ html,body {
 /* Set the fixed height of the footer here */
 #footer {
 	height: 50px;
-	background-color: #f5f5f5;
 	text-align: center;
 	line-height: 50px;
+	color: white;
 }
 
 .social {
 	position: absolute;
-	top: 30px;
+	top: 320px;
 	left: 20px;
 }
 
@@ -80,7 +91,11 @@ html,body {
 
 #demo-video {
 	text-align: center;
-	margin-top: 10px;
+	margin-top: 50px;
+}
+
+#demo-video a {
+	color: white;
 }
 
 /* MASCOT */
@@ -93,14 +108,28 @@ html,body {
 	cursor: pointer;
 }
 
-#mascot-container {
-	margin-top: 30px;
-	margin-bottom: 30px;
-	padding-top: 10px;
-	padding-bottom: 10px;
+#mascot-container,
+#loading,
+#landing-picture {
+	width: 100%;
+	max-width: 100%;
 	background-image: url('../img/mascot_background.png');
-	background-repeat: no-repeat;
-	background-position: center;
+	background-repeat: repeat-x;
+	background-position: center bottom;
+	background-color: #caf5fd;
+}
+
+#nav {
+	background-color:#caf5fd;
+	padding-bottom: 30px;
+}
+
+.main-picture,
+.main-search,
+.main-scramble {
+	background-image: url('../img/mascot_background_cloud.png');
+	background-repeat: repeat;
+	background-color: #caf5fd;
 }
 
 .mascot-img-container {
@@ -120,8 +149,9 @@ html,body {
 
 /* INDEX.HTML */
 
-#logo img {
+#logo {
 	margin-top: 20px;
+	cursor: pointer;
 }
 
 #nav-profile {
@@ -171,23 +201,25 @@ html,body {
 
 /* LANDING.HTML */
 
-.main-landing #main-picture {
-	margin-top: 30px;
+#main-picture {
+	margin-top: 50px;
 	text-align: center;
 }
 
-.main-landing #main-picture img {
+#main-picture img {
 	pointer-events: none
 }
 
 /* HOMEPAGE.HTML */
 .main-homepage #game-chooser {
+	padding-top: 30px;
 	display: block;
 	text-align: center;
 }
 
-.main-homepage .game-icon {
-	cursor: pointer;
+.main-homepage .game-icon:hover {
+	cursor: pointer;	
+	opacity: 0.7;
 }
 
 .main-homepage .game-caption {
@@ -196,19 +228,7 @@ html,body {
 	font-weight: bold;
 	margin-top: 10px;
 	margin-bottom: 30px;
-}
-
-.main-homepage #game-caption-picture {
-	color: #66baf5;
-}
-
-.main-homepage #game-caption-search {
-	color: #ffcc00;
-}
-
-
-.main-homepage #game-caption-scramble {
-	color: #29cb53;
+	color: white;
 }
 
 
@@ -220,6 +240,7 @@ html,body {
 
 .main-picture .picture-wrapper {
 	background-size: 150px;
+	background-color: white;
 
 	width: 150px;
 	height: 150px;
@@ -265,6 +286,8 @@ html,body {
 /* SEARCH_GAME.HTML */
 
 .main-search table {
+	background-color: #EEEEEE;
+	
 	margin-top: 30px;
 	
 	webkit-touch-callout: none;
