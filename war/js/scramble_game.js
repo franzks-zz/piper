@@ -50,20 +50,15 @@ function btnRevealClick(e) {
 }
 
 function retrievePerson() {
-	gapi.client.load('plus', 'v1', function() {
-		var request = gapi.client.plus.people.list({
-			'userId' : 'me',
-			'collection' : 'visible',
-			'orderBy' : 'best'
-		});
-		request.execute(function(resp) {
-			chooseRandomPerson(resp);
-			displayChars(arrScrambledChars);
-			attachDragListeners();
-			$("#loading").css('display','none');
-			$("#wrap-inner").css('display','block');
-		});
-	});
+	socialNetwork.retrieveFriends(retrievePersonCallback);
+}
+
+function retrievePersonCallback(resp) {
+	chooseRandomPerson(resp);
+	displayChars(arrScrambledChars);
+	attachDragListeners();
+	$("#loading").css('display','none');
+	$("#wrap-inner").css('display','block');
 }
 
 function chooseRandomPerson(resp) {	

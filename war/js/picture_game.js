@@ -13,7 +13,7 @@ var arrPeopleNames = [];
 
 var numOfMistakes = 0;
 
-$(function() {	
+$(function() {
 	swapMascot(gender,MASCOT_REGULAR);	
 	$("#mascot-bubble").text($("#msg-default").text());
 	$("#mascot-img").click(mascotClick);
@@ -138,19 +138,14 @@ function handleDragEnd(e) {
 }
 
 function retrievePeople() {
-	gapi.client.load('plus', 'v1', function() {
-		var request = gapi.client.plus.people.list({
-			'userId' : 'me',
-			'collection' : 'visible',
-			'orderBy' : 'best'
-		});
-		request.execute(function(resp) {
-			chooseRandomPeople(resp);
-			displayPeople(arrPeoplePicsRandomized);
-			$("#loading").css('display','none');
-			$("#wrap-inner").css('display','block');
-		});
-	});
+	socialNetwork.retrieveFriends(retrievePeopleCallback);
+}
+
+function retrievePeopleCallback(resp) {
+	chooseRandomPeople(resp);
+	displayPeople(arrPeoplePicsRandomized);
+	$("#loading").css('display','none');
+	$("#wrap-inner").css('display','block');
 }
 
 function chooseRandomPeople(resp) {	

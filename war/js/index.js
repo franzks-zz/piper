@@ -1,67 +1,17 @@
 $.ajaxSetup({ cache: false });
 
+var socialNetwork;
+
 $(function() {
+	socialNetwork = new SocialNetwork();
+	
 	$("#wrap-inner").load("landing.html");
 	$("#logo").click(logoClick);
-	$("#btn-sign-out").click(btnSignOutClick);
+	$("#btn-sign-out").click(socialNetwork.btnSignOutClick);
 });
 
 function logoClick(e) {
 	document.location.href="/";
-}
-
-var justSignedOut = false;
-
-function btnSignOutClick(e) {
-	justSignedOut = true;
-	gapi.auth.signOut();
-}
-
-function signinCallback(authResult) {
-	if (authResult['access_token']) {		
-		$("#signinButton").css("display", "none");
-		
-		gapi.client.load('plus', 'v1', function() {
-			var request = gapi.client.plus.people.list({
-				'userId' : 'me',
-				'collection' : 'visible',
-				'orderBy' : 'best'
-			});
-			request.execute(function(resp) {
-				if(resp.totalItems >= 10) {
-					$("#btn-play").css("display", "block");
-				} else {
-					$("#msg-error").css("display", "block");
-				}
-			});
-		});
-		
-		gapi.client.load('plus', 'v1', function() {
-			var request = gapi.client.plus.people.get({
-				'userId' : 'me'
-			});
-			request.execute(function(resp) {
-				displayUser(resp);
-			});
-		});
-		
-		randomizeGender();
-	} else if (authResult['error']) {
-		if(justSignedOut) {
-			document.location.href="/";
-		} else {
-			$("#signinButton").css("display", "block");
-		}
-	}
-}
-
-function displayUser(resp) {
-	var url = resp.image.url;
-	url = url.substring(0,url.length-2);
-	url += "30";
-	$("#nav-profile-photo").attr('src',url);
-	$("#welcome-message").text("Welcome, " + resp.displayName + "!");
-	$("#nav-profile").css('display', 'block');
 }
 
 var GENDER_MALE = 1;
@@ -102,7 +52,9 @@ function swapMascot(gender, mascotPose) {
 	}
 }
 
-// util functions
+/*
+ * 	Util Functions
+ */ 
 function shuffle(array) {
     var counter = array.length, temp, index;
 
@@ -149,3 +101,82 @@ $.cssHooks.backgroundColor = {
         }
     }
 }
+
+/*
+ * Object for handling all social-network related API calls
+ */
+
+function SocialNetwork() {
+	this.justSignedOut = false;
+}
+
+SocialNetwork.prototype.signinCallback = function(authResult) {
+	if (authResult['access_token']) {		
+		$("#signinButton").css("display", "none");
+		
+		gapi.client.load('plus', 'v1', function() {
+			var request = gapi.client.plus.people.list({
+				'userId' : 'me',
+				'collection' : 'visible',
+				'orderBy' : 'best'
+			});
+			request.execute(function(resp) {
+				if(resp.totalItems >= 10) {
+					$("#btn-play").css("display", "block");
+				} else {
+					$("#msg-error").css("display", "block");
+				}
+			});
+		});
+		
+		gapi.client.load('plus', 'v1', function() {
+			var request = gapi.client.plus.people.get({
+				'userId' : 'me'
+			});
+			request.execute(function(resp) {
+				socialNetwork.displayUser(resp);
+			});
+		});
+		
+		randomizeGender();
+	} else if (authResult['error']) {
+		
+		if(this.justSignedOut) {
+			document.location.href="/";
+		} else {
+			$("#signinButton").css("display", "block");
+		}
+	}
+}
+
+SocialNetwork.prototype.displayUser = function(resp) {
+	var url = resp.image.url;
+	url = url.substring(0,url.length-2);
+	url += "30";
+	$("#nav-profile-photo").attr('src',url);
+	$("#welcome-message").text("Welcome, " + resp.displayName + "!");
+	$("#nav-profile").css('display', 'block');
+}
+
+SocialNetwork.prototype.btnSignOutClick = function(e) {
+	socialNetwork.justSignedOut = true;
+	gapi.auth.signOut();
+}
+
+SocialNetwork.prototype.retrieveFriends = function(callback) {
+	gapi.client.load('plus', 'v1', function() {
+		var request = gapi.client.plus.people.list({
+			'userId' : 'me',
+			'collection' : 'visible',
+			'orderBy' : 'best'
+		});
+		request.execute(function(resp) {
+			callback(resp);
+		});
+	});
+}
+
+function gPlusSigninCallback(authResult) {
+	socialNetwork.signinCallback(authResult);
+}
+	

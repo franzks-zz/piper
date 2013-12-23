@@ -200,22 +200,17 @@ function restart() {
 }
 
 function retrievePeople() {
-	gapi.client.load('plus', 'v1', function() {
-		var request = gapi.client.plus.people.list({
-			'userId' : 'me',
-			'collection' : 'visible',
-			'orderBy' : 'best'
-		});
-		request.execute(function(resp) {
-			chooseRandomPeople(resp);
-			temporarilyFillPuzzle();
-			generatePuzzle();
-			fillPuzzle();
-			displayPuzzle();
-			$("#loading").css('display','none');
-			$("#wrap-inner").css('display','block');
-		});
-	});
+	socialNetwork.retrieveFriends(retrievePeopleCallback);
+}
+
+function retrievePeopleCallback(resp) {
+	chooseRandomPeople(resp);
+	temporarilyFillPuzzle();
+	generatePuzzle();
+	fillPuzzle();
+	displayPuzzle();
+	$("#loading").css('display','none');
+	$("#wrap-inner").css('display','block');
 }
 
 function chooseRandomPeople(resp) {
