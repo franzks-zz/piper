@@ -84,11 +84,6 @@ html,body {
 	width: 80px;
 }
 
-#signinButton-wrapper {
-	margin-top: 20px;
-	text-align: center;
-}
-
 #demo-video {
 	text-align: center;
 	margin-top: 50px;
@@ -189,13 +184,44 @@ html,body {
 }
 
 #btn-play:hover {
-	background-color: #e4747c;
+	background-color: #d2322d;
 	text-decoration: none;
 }
 
 #msg-error {
 	display: none;
 	margin-top: 30px;
+}
+
+#signin-wrapper {
+	text-align: center;
+	color: #FFFFFF;
+}
+
+.signin-button {
+	cursor: pointer;
+	margin-top: 20px;
+	font-size: 150%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.signin-button:hover {
+	opacity: 0.8;
+}
+
+#signin-google {
+	background-color: #dd4b39;
+}
+
+#signin-facebook {
+	background-color: #35619f;
 }
 
 

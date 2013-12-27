@@ -112,7 +112,7 @@ function SocialNetwork() {
 
 SocialNetwork.prototype.signinCallback = function(authResult) {
 	if (authResult['access_token']) {		
-		$("#signinButton").css("display", "none");
+		$("#signin-wrapper").css("display", "none");
 		
 		gapi.client.load('plus', 'v1', function() {
 			var request = gapi.client.plus.people.list({
@@ -144,7 +144,7 @@ SocialNetwork.prototype.signinCallback = function(authResult) {
 		if(this.justSignedOut) {
 			document.location.href="/";
 		} else {
-			$("#signinButton").css("display", "block");
+			$("#signin-wrapper").css("display", "block");
 		}
 	}
 }
