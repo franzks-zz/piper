@@ -200,7 +200,7 @@ function restart() {
 }
 
 function retrievePeople() {
-	socialNetwork.retrieveFriends(retrievePeopleCallback);
+	socialNetwork.retrieveFriends(10,retrievePeopleCallback);
 }
 
 function retrievePeopleCallback(resp) {
@@ -214,37 +214,16 @@ function retrievePeopleCallback(resp) {
 }
 
 function chooseRandomPeople(resp) {
-	
-	for(var i=0; i<10; i++) {		
-		var rand;
+	for(var i=0; i<10; i++) {
+		arrNamesPreserved.push(resp[i][0]);
 		
-		if(resp.totalItems >= 100) {
-			rand = Math.floor(Math.random()*100);
-		} else {
-			rand = Math.floor(Math.random()*resp.totalItems);
-		}
-		
-		var name = resp.items[rand].displayName;
-		
-		if( (name.charAt(name.length-1) == '.') &&
-			(name.charAt(name.length-2) == ' ')) {
-			name = name.substring(0,name.length-2);
-		}
-		
+		var name = resp[i][0];
 		name = name.toUpperCase();
 		name = name.replace(/\./g,'');
-		
-		var namePreserved = name;
-		
 		name = name.replace(/\ /g,'');
 		name = name.replace(/\-/g,'');
 		
-		if($.inArray(name,arrNames) == -1) {
-			arrNames.push(name);
-			arrNamesPreserved.push(namePreserved);
-		} else {
-			i--;
-		}
+		arrNames.push(name);
 	}
 	
 	arrNames.sort(function(a, b) {

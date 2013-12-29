@@ -6,7 +6,6 @@ var gameState = GAME_STATE_ONGOING;
 var arrPictureWrappers;
 var dragSrcEl = null;
 
-var arrPeople = [];
 var arrPeoplePics = [];
 var arrPeoplePicsRandomized = [];
 var arrPeopleNames = [];
@@ -53,7 +52,6 @@ function mascotClick(e) {
 }
 
 function restart() {
-	arrPeople = [];
 	arrPeoplePics = [];
 	arrPeoplePicsRandomized = [];
 	arrPeopleNames = [];
@@ -138,7 +136,7 @@ function handleDragEnd(e) {
 }
 
 function retrievePeople() {
-	socialNetwork.retrieveFriends(retrievePeopleCallback);
+	socialNetwork.retrieveFriends(5,retrievePeopleCallback);
 }
 
 function retrievePeopleCallback(resp) {
@@ -149,36 +147,10 @@ function retrievePeopleCallback(resp) {
 }
 
 function chooseRandomPeople(resp) {	
+	
 	for(var i=0; i<5; i++) {
-		
-		var rand;
-		
-		if(resp.totalItems >= 100) {
-			rand = Math.floor(Math.random()*100);
-		} else {
-			rand = Math.floor(Math.random()*resp.totalItems);
-		}
-		
-		if($.inArray(resp.items[rand],arrPeople) == -1) {			
-			arrPeople.push(resp.items[rand]);
-			
-			var url = arrPeople[i].image.url;
-			url = url.substring(0,url.length-2);
-			url += "150";
-			
-			arrPeoplePics.push(url);
-			
-			var name = arrPeople[i].displayName;
-			
-			if( (name.charAt(name.length-1) == '.') &&
-				(name.charAt(name.length-2) == ' ')) {
-				name = name.substring(0,name.length-2);
-			}
-			
-			arrPeopleNames.push(name);
-		} else {
-			i--;
-		}
+		arrPeopleNames.push(resp[i][0]);
+		arrPeoplePics.push(resp[i][1]);
 	}
 	
 	var arrRandomized = shuffle([0,1,2,3,4]);

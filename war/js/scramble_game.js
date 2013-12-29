@@ -50,7 +50,7 @@ function btnRevealClick(e) {
 }
 
 function retrievePerson() {
-	socialNetwork.retrieveFriends(retrievePersonCallback);
+	socialNetwork.retrieveFriends(1,retrievePersonCallback);
 }
 
 function retrievePersonCallback(resp) {
@@ -62,20 +62,8 @@ function retrievePersonCallback(resp) {
 }
 
 function chooseRandomPerson(resp) {	
-	var rand;
-	
-	if(resp.totalItems >= 100) {
-		rand = Math.floor(Math.random()*100);
-	} else {
-		rand = Math.floor(Math.random()*resp.totalItems);
-	}
-	
-	name = resp.items[rand].displayName;
-	
-	if( (name.charAt(name.length-1) == '.') &&
-		(name.charAt(name.length-2) == ' ')) {
-		name = name.substring(0,name.length-2);
-	}
+	var name = resp[0][0];
+	var url = resp[0][1];
 	
 	spaceCount = 0;
 	arrSpaceIndices = [];
@@ -93,10 +81,7 @@ function chooseRandomPerson(resp) {
 	arrScrambledChars = shuffle(name.split(""));
 	
 	// Show Blurred Profile Photo as a clue
-	var image = resp.items[rand].image.url;
-	image = image.substring(0,image.length-2);
-	image += "150";
-	$("#blurred-image").attr("src",image);
+	$("#blurred-image").attr("src",url);
 	
 	vague = $("#blurred-image").Vague({
 		intensity: 5

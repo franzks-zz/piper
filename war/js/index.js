@@ -139,17 +139,59 @@ SocialNetwork.prototype.btnSignOutClick = function(e) {
 	}
 }
 
-SocialNetwork.prototype.retrieveFriends = function(callback) {
-	gapi.client.load('plus', 'v1', function() {
-		var request = gapi.client.plus.people.list({
-			'userId' : 'me',
-			'collection' : 'visible',
-			'orderBy' : 'best'
+SocialNetwork.prototype.retrieveFriends = function(num,callback) {
+	var response;
+	
+	if(platform == PLATFORM_GOOGLE) {
+		gapi.client.load('plus', 'v1', function() {
+			var request = gapi.client.plus.people.list({
+				'userId' : 'me',
+				'collection' : 'visible',
+				'orderBy' : 'best'
+			});
+			request.execute(function(resp) {
+				response = socialNetwork.parseResponseGoogle(num,resp);
+				callback(response);
+			});
 		});
-		request.execute(function(resp) {
-			callback(resp);
-		});
-	});
+	}
+}
+
+SocialNetwork.prototype.parseResponseGoogle = function(num,resp) {
+	var response = [];
+	var arrPeople = [];
+	
+	for(var i=0; i<num; i++) {
+		
+		var rand;
+		
+		if(resp.totalItems >= 100) {
+			rand = Math.floor(Math.random()*100);
+		} else {
+			rand = Math.floor(Math.random()*resp.totalItems);
+		}
+		
+		if($.inArray(resp.items[rand],arrPeople) == -1) {
+			
+			var name = resp.items[rand].displayName;
+			
+			if( (name.charAt(name.length-1) == '.') &&
+				(name.charAt(name.length-2) == ' ')) {
+				name = name.substring(0,name.length-2);
+			}
+			
+			var url = resp.items[rand].image.url;
+			url = url.substring(0,url.length-2);
+			url += "150";
+			
+			response.push([name,url]);
+			arrPeople.push(resp.items[rand]);
+		} else {
+			i--;
+		}
+	}
+	
+	return response;
 }
 
 function gPlusSigninCallback(authResult) {
@@ -224,20 +266,10 @@ window.fbAsyncInit = function() {
 				socialNetwork.displayUser(response.name, url);
 			});
 			randomizeGender();
-		} else if (response.status === 'not_authorized') {
-			// In this case, the person is logged into Facebook, but not into
-			// the app, so we call
-			// FB.login() to prompt them to do so.
-			// In real-life usage, you wouldn't want to immediately prompt
-			// someone to login
-			// like this, for two reasons:
-			// (1) JavaScript created popup windows are blocked by most browsers
-			// unless they
-			// result from direct interaction from people using the app (such as
-			// a mouse click)
-			// (2) it is a bad experience to be continually prompted to login
-			// upon page load.
-			$("#signin-wrapper").css("display", "block");
+			
+			FB.api('/me/friends', function(response) {
+				console.log(response);
+			});
 		} else {
 			// In this case, the person is not logged into Facebook, so we call
 			// the login()
