@@ -3,7 +3,7 @@ var GAME_STATE_ENDED = 2;
 
 var gameState = GAME_STATE_ONGOING;
 
-var name;
+var preservedName;
 var image;
 var arrScrambledChars;
 var arrSpaceIndices = [];
@@ -46,7 +46,7 @@ function btnNewClick(e) {
 
 function btnRevealClick(e) {
 	finishGame();
-	displayChars(name.split(""));
+	displayChars(preservedName.split(""));
 }
 
 function retrievePerson() {
@@ -61,7 +61,7 @@ function retrievePersonCallback(resp) {
 	$("#wrap-inner").css('display','block');
 }
 
-function chooseRandomPerson(resp) {	
+function chooseRandomPerson(resp) {
 	var name = resp[0][0];
 	var url = resp[0][1];
 	
@@ -77,6 +77,7 @@ function chooseRandomPerson(resp) {
 	
 	name = name.toUpperCase();
 	name = name.replace(/\ /g,'');
+	preservedName = name;
 	
 	arrScrambledChars = shuffle(name.split(""));
 	
@@ -183,7 +184,7 @@ function attachDragListeners() {
 function checkAnswer() {
 	var arrCharAnswers = $(".scramble-char");
 	for(var i=0; i<arrCharAnswers.length; i++) {
-		if($(arrCharAnswers[i]).text() != name.charAt(i)) {
+		if($(arrCharAnswers[i]).text() != preservedName.charAt(i)) {
 			return false;
 		}
 	}

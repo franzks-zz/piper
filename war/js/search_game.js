@@ -117,13 +117,12 @@ function highlightNameList(answer) {
 		var namePreserved = listSpan[i].textContent;
 		namePreserved = namePreserved.replace(/\ /g,'');
 		namePreserved = namePreserved.replace(/\-/g,'');
+		namePreserved = namePreserved.toUpperCase();
 
 		if(namePreserved == answer) {
 			$(listSpan[i]).css("color","green");
 		}
 	}
-	
-	
 }
 
 function checkAnswer(answer) {	

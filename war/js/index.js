@@ -154,6 +154,11 @@ SocialNetwork.prototype.retrieveFriends = function(num,callback) {
 				callback(response);
 			});
 		});
+	} else if(platform == PLATFORM_FACEBOOK) {
+		FB.api('/me/friends', function(resp) {
+			response = socialNetwork.parseResponseFacebook(num,resp);
+			callback(response);
+		});
 	}
 }
 
@@ -163,13 +168,7 @@ SocialNetwork.prototype.parseResponseGoogle = function(num,resp) {
 	
 	for(var i=0; i<num; i++) {
 		
-		var rand;
-		
-		if(resp.totalItems >= 100) {
-			rand = Math.floor(Math.random()*100);
-		} else {
-			rand = Math.floor(Math.random()*resp.totalItems);
-		}
+		var rand = Math.floor(Math.random()*resp.totalItems);
 		
 		if($.inArray(resp.items[rand],arrPeople) == -1) {
 			
@@ -186,6 +185,29 @@ SocialNetwork.prototype.parseResponseGoogle = function(num,resp) {
 			
 			response.push([name,url]);
 			arrPeople.push(resp.items[rand]);
+		} else {
+			i--;
+		}
+	}
+	
+	return response;
+}
+
+SocialNetwork.prototype.parseResponseFacebook = function(num,resp) {
+	var response = [];
+	var arrPeople = [];
+	
+	for(var i=0; i<num; i++) {
+		var rand = Math.floor(Math.random()*resp.data.length);
+		
+		if($.inArray(resp.data[rand],arrPeople) == -1) {
+			var name = resp.data[rand].name;
+			
+			var url = "https://graph.facebook.com/" + resp.data[rand].id
+			+ "/picture?width=150&height=150";
+			
+			response.push([name,url]);
+			arrPeople.push(resp.data[rand]);
 		} else {
 			i--;
 		}
@@ -266,10 +288,6 @@ window.fbAsyncInit = function() {
 				socialNetwork.displayUser(response.name, url);
 			});
 			randomizeGender();
-			
-			FB.api('/me/friends', function(response) {
-				console.log(response);
-			});
 		} else {
 			// In this case, the person is not logged into Facebook, so we call
 			// the login()
