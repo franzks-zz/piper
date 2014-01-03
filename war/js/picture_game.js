@@ -117,11 +117,15 @@ function handleDrop(e) {
 		e.stopPropagation();
 	}
 
-	if(dragSrcEl != this) {
+	if(dragSrcEl != this) {		
 		var parent = $(this).parent();
-		var temp = $(dragSrcEl).replaceWith(this);
+		var source = $(dragSrcEl);
 		
-		$(parent).prepend(temp);
+		var parentUrl = parent.context.style.backgroundImage;
+		var sourceUrl = source.context.style.backgroundImage;
+		
+		parent.context.style.backgroundImage = sourceUrl;
+		source.context.style.backgroundImage = parentUrl;
 	}
 	
 	return false;
@@ -160,10 +164,10 @@ function chooseRandomPeople(resp) {
 	}
 }
 
-function displayPeople(arrPeoplePics) {	
+function displayPeople(arrPics) {
 	for(var i=1; i<=5; i++) {
 		$("#name-" + i).text(arrPeopleNames[i-1]);
-		$("#picture-" + i).css("background-image","url('"+arrPeoplePics[i-1]+"')");
+		$("#picture-" + i).css("background-image","url('"+arrPics[i-1]+"')");
 	}
 }
 

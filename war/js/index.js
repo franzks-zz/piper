@@ -168,7 +168,12 @@ SocialNetwork.prototype.parseResponseGoogle = function(num,resp) {
 	
 	for(var i=0; i<num; i++) {
 		
-		var rand = Math.floor(Math.random()*resp.totalItems);
+		if(resp.totalItems >= 100) {
+			var rand = Math.floor(Math.random()*100);
+		} else {
+			var rand = Math.floor(Math.random()*resp.totalItems);
+		}
+		
 		
 		if($.inArray(resp.items[rand],arrPeople) == -1) {
 			
