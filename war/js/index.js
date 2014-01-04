@@ -1,6 +1,6 @@
-$.ajaxSetup({
-	cache : false
-});
+//$.ajaxSetup({
+//	cache : false
+//});
 
 var socialNetwork;
 
