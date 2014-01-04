@@ -47,7 +47,7 @@ function mascotClick(e) {
 			swapMascot(gender,MASCOT_SAD);
 			
 		} else {
-			finishGame();
+			finishGame(false);
 		}
 	} else if(gameState == GAME_STATE_ENDED) {
 		restart();
@@ -66,9 +66,14 @@ function restart() {
 	swapMascot(gender,MASCOT_REGULAR);
 }
 
-function finishGame() {
-	$("#mascot-bubble").text($("#msg-correct").text());
-	swapMascot(gender,MASCOT_WIN);
+function finishGame(revealed) {
+	if(revealed) {
+		$("#mascot-bubble").text($("#msg-revealed").text());
+	} else {
+		$("#mascot-bubble").text($("#msg-correct").text());
+		swapMascot(gender,MASCOT_WIN);
+	}
+	
 	gameState = GAME_STATE_ENDED;
 	
 	soundDing.currentTime = 0;
@@ -87,7 +92,7 @@ function btnNewClick(e) {
 
 function btnRevealClick(e) {
 	displayPeople(arrPeoplePics);
-	finishGame();
+	finishGame(true);
 }
 
 function handleDragStart(e) {

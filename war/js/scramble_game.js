@@ -48,7 +48,7 @@ function btnNewClick(e) {
 }
 
 function btnRevealClick(e) {
-	finishGame();
+	finishGame(true);
 	displayChars(preservedName.split(""));
 }
 
@@ -169,7 +169,7 @@ function handleDrop(e) {
 	}
 	
 	if(checkAnswer()) {
-		finishGame();
+		finishGame(false);
 	}
 	
 	return false;
@@ -197,10 +197,16 @@ function checkAnswer() {
 	return true;
 }
 
-function finishGame() {
+function finishGame(revealed) {
 	vague.unblur();
-	swapMascot(gender,MASCOT_WIN);
-	$("#mascot-bubble").text($("#msg-correct").text());
+	
+	if(revealed) {
+		$("#mascot-bubble").text($("#msg-revealed").text());
+	} else {
+		$("#mascot-bubble").text($("#msg-correct").text());
+		swapMascot(gender,MASCOT_WIN);
+	}
+	
 	gameState = GAME_STATE_ENDED;
 	
 	soundDing.currentTime = 0;

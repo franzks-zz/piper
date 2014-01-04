@@ -82,7 +82,7 @@ function tdClick(e) {
 				soundDing.play();
 				
 				if(numOfCorrect == 10) {
-					finishGame();
+					finishGame(false);
 				}
 			} else {
 				colorCells(answer, COLOR_WRONG);
@@ -146,10 +146,16 @@ function checkAnswer(answer) {
 	return -1;
 }
 
-function finishGame() {
+function finishGame(revealed) {
 	colorAllWrongCells();
-	$("#mascot-bubble").text($("#msg-finished").text());
-	swapMascot(gender,MASCOT_WIN);
+	
+	if(revealed) {
+		$("#mascot-bubble").text($("#msg-revealed").text());
+	} else {
+		$("#mascot-bubble").text($("#msg-finished").text());
+		swapMascot(gender,MASCOT_WIN);
+	}
+	
 	gameState = GAME_STATE_ENDED;
 }
 
@@ -179,7 +185,7 @@ function btnRevealClick(e) {
 	colorAllWrongCells();
 	$(".name-list-span").css('color','green');
 	
-	finishGame();
+	finishGame(true);
 }
 
 function mascotClick(e) {
