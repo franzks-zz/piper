@@ -12,6 +12,9 @@ var arrPeopleNames = [];
 
 var numOfMistakes = 0;
 
+var soundPop = new Audio('../sfx/pop.mp3');
+var soundDing = new Audio('../sfx/ding.mp3');
+
 $(function() {
 	swapMascot(gender,MASCOT_REGULAR);	
 	$("#mascot-bubble").text($("#msg-default").text());
@@ -67,6 +70,9 @@ function finishGame() {
 	$("#mascot-bubble").text($("#msg-correct").text());
 	swapMascot(gender,MASCOT_WIN);
 	gameState = GAME_STATE_ENDED;
+	
+	soundDing.currentTime = 0;
+	soundDing.play();
 }
 
 function btnMainMenuClick(e) {
@@ -126,6 +132,9 @@ function handleDrop(e) {
 		
 		parent.context.style.backgroundImage = sourceUrl;
 		source.context.style.backgroundImage = parentUrl;
+		
+		soundPop.currentTime = 0;
+		soundPop.play();
 	}
 	
 	return false;

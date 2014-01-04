@@ -11,6 +11,9 @@ var spaceCount;
 
 var vague;
 
+var soundPop = new Audio('../sfx/pop.mp3');
+var soundDing = new Audio('../sfx/ding.mp3');
+
 $(function() {
 	swapMascot(gender,MASCOT_REGULAR);
 	$("#mascot-bubble").text($("#msg-default").text());
@@ -160,6 +163,9 @@ function handleDrop(e) {
 		var temp = $(dragSrcEl).replaceWith(this);
 		
 		$(parent).prepend(temp);
+		
+		soundPop.currentTime = 0;
+		soundPop.play();
 	}
 	
 	if(checkAnswer()) {
@@ -196,4 +202,7 @@ function finishGame() {
 	swapMascot(gender,MASCOT_WIN);
 	$("#mascot-bubble").text($("#msg-correct").text());
 	gameState = GAME_STATE_ENDED;
+	
+	soundDing.currentTime = 0;
+	soundDing.play();
 }

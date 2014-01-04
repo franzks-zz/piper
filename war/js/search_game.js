@@ -15,6 +15,9 @@ var numOfCorrect = 0;
 
 var arrPuzzle = [];
 
+var soundPop = new Audio('../sfx/pop.mp3');
+var soundDing = new Audio('../sfx/ding.mp3');
+
 $(function() {
 	swapMascot(gender,MASCOT_REGULAR);
 	$("#mascot-bubble").text($("#msg-default").text());
@@ -75,13 +78,18 @@ function tdClick(e) {
 				highlightNameList(arrNames[result]);
 				numOfCorrect++;
 				
+				soundDing.currentTime = 0;
+				soundDing.play();
+				
 				if(numOfCorrect == 10) {
 					finishGame();
 				}
 			} else {
 				colorCells(answer, COLOR_WRONG);
-			}
-			
+				
+				soundPop.currentTime = 0;
+				soundPop.play();
+			}			
 		} else {
 			colorCell(e.target.id,COLOR_WRONG);
 		}
